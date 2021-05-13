@@ -1,0 +1,87 @@
+{
+    "Side":{
+        "Title":"Profilo",
+        "Lingua":"Lingua",
+        "it":"Italiano",
+        "en":"English",
+        "Logout":"Logout"
+    },
+    "Auth":{
+        "Title":"Accedi",
+        "WelcomeText":"Benvenuto su Aldilapp!",
+        "AccediConGoogle":"Accedi con Google",
+        "AccediConApple":"Accedi con Apple",
+        "AccediAnonimo":"Accedi in Anonimo",
+        "Oppure":"oppure",
+        "Anonimo":"Anonimo",
+        "PresentationText":"<ion-text><h6>Cerca con semplicità i tuoi defunti all'interno di un cimitero</h6></ion-text><p>Quando sei in un cimitero alla ricerca di un tuo caro, tramite un semplice ricerca nominativa puoi scoprire il punto esatto in cui è sepolto.</p><p>Tanti altri interessanti servizi verranno a breve integrati nell app.</p>",
+        "AuthFallitaTitle":"Login fallito"
+    },
+    "Tabs":{
+        "TitleTab1":"Cerca",
+        "TitleTab2":"I miei defunti",
+        "TitleTab4":"Informazioni"
+    },
+    "Search":{
+        "Title":"Cerca un defunto",
+        "SubTitle":"Inserisci i dati in tuo possesso",
+        "CognomeLabel":"Cognome del defunto",
+        "NomeLabel":"Nome del defunto",
+        "DataNascitaLabel":"Data di nascita",
+        "DataMorteLabel":"Data di morte",
+        "Cimiterolabel":"Cimitero di sepoltura",
+        "SearchButton":"Cerca",
+        "AllCimiteriLabel":"- Tutti quelli gestiti da Aldilapp -",
+        "ErrorTitle":"Errore",
+        "ErrorGen": "Si è verificato un problema nel tentativo di recuperare i dati. Riprova",
+        "WarnTitle":"Attenzione!",
+        "WarnNoData": "Non ci sono risultati.",
+        "CancelText": "Annulla",
+        "DoneText": "Seleziona"
+    },
+    "Results":{
+        "Title":"Risultati",
+        "NatoLabel":"Nato il ",
+        "MortoLabel":"Morto il "
+    },
+    "Detail":{
+        "NatoLabel":"Nato il ",
+        "MortoLabel":"Morto il ",
+        "TipoManufatto":"Tipo manufatto",
+        "CimiteroLabel":"Cimitero",
+        "PosizioneLabel":"Attuale posizione",
+        "TipoPosizioneLabel":"Tipo posizione",
+        "AreaLabel":"Area",
+        "ZonaLabel":"Zona",
+        "InCaricamento":"Caricamento dati...",
+        "AddButton":"Aggiungi ai Miei defunti",
+        "GeoLabel": "Geolocalizzazione",
+        "NonDefinita": "Non definita",    
+        "CancelButton": "Annulla",
+        "LoginButton": "Accedi",
+        "WarnAnonimoTitle": "Attenzione!",
+        "WarnAnonimoText": "Questa funzione è abilitata solo per gli utenti registrati.",
+        "WarnDefuntoOkButton": "OK",
+        "WarnDefuntoExistsTitle": "Attenzione!",
+        "WarnDefuntoExistsText": "Questo defunto è già nella lista dei tuoi defunti."
+    },
+    "MieiDefunti":{
+        "Title": "I miei defunti",
+        "AccediTitle": "Accedi",
+        "AccediSubTitle": "Questa funzionalità non può essere utilizzata dagli utenti anonimi",
+        "PresentationTitle":"Da questa schermata potrai:",
+        "PresentationHtmlContent":"<ul><li>Visualizzare l'elenco dei defunti che hai inserito in 'I miei defunti'</li><li>Accedere velocemente alla scheda defunto di uno dei tuoi cari</li></ul>",
+        "NessunDefuntoText1":"Non hai aggiunto ancora nessun defunto",
+        "NessunDefuntoText2":"Clicca sul tasto blu in basso, cerca un defunto e aggiungilo ai tuoi defunti."
+    },
+    "App":{
+        "AggiornaTitle":"Aggiorna",
+        "AggiornaText":"E' disponibibile un aggiornamento dell'app.",
+        "AggiornaButton":"Aggiorna"
+    },
+    "Info":{
+        "Title":"Informazioni",
+        "Html1":"<p class='pb-4'>Aldilapp è un progetto distribuito e gestito in Italia da STUP1 srls, regolarmente iscritta al registro MEPA dei fornitori per la pubblica amministrazione.</p><p class='pb-4'>L'intento del progetto è incentivare la digitalizzazione delle anagrafi cimiteriali e allo stesso tempo fornire un supporto al cittadino nel rintracciare le salme dei propri amici e/o parenti estinti.</p><p class='pb-4'>Se il tuo comune non è convenzionato con il progetto non puoi trarre beneficio dai servizi Aldilapp, chiedi informazioni tramite il sito di riferimento aldilapp.it</p>",
+        "Html2":"<p>Les strutture che al momento hanno aderito al progetto sono:</p>"
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "aldilapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

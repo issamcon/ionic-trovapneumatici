@@ -1,0 +1,8 @@
+<?xml version='1.1' encoding='utf-8'?>
+<resources>
+    <string name="app_name">aldilapp</string>
+    <string name="title_activity_main">aldilapp</string>
+    <string name="package_name">com.stup1.aldilapp</string>
+    <string name="custom_url_scheme">com.stup1.aldilapp</string>
+    <string name="server_client_id">504740849427-6de9157qmnnvuaun3kevpg6685qfe512.apps.googleusercontent.com</string>
+</resources>

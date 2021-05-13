@@ -1,0 +1,87 @@
+{
+    "Side":{
+        "Title":"Profile",
+        "Lingua":"Language",
+        "it":"Italiano",
+        "en":"English",
+        "Logout":"Logout"
+    },
+    "Auth":{
+        "Title":"Login",
+        "WelcomeText":"Welcome to Aldilapp!",
+        "AccediConGoogle":"Sign in with Google",
+        "AccediConApple":"Sign in with Apple",
+        "AccediAnonimo":"Enter as Anonymous",
+        "Oppure":"or",
+        "Anonimo":"Anonymous",
+        "PresentationText":"<ion-text><h6>Search easily for your deceased in a cemetery</h6></ion-text><p>When you are in a cemetery looking for a loved one, through a simple search by name you can find out the exact spot where he is buried.</p><p>Many other interesting services will soon be integrated into the app.</p>",
+        "AuthFallitaTitle":"Login failed"
+    },
+    "Tabs":{
+        "TitleTab1":"Search",
+        "TitleTab2":"My relatives",
+        "TitleTab4":"Informazioni"
+    },
+    "Search":{
+        "Title":"Search a deceased",
+        "SubTitle":"Enter all the data you have",
+        "CognomeLabel":"Lastname of the deceased",
+        "NomeLabel":"Firstname of the deceased",
+        "DataNascitaLabel":"Birth date",
+        "DataMorteLabel":"Death date",
+        "Cimiterolabel":"Burial cemetery",
+        "SearchButton":"Search",
+        "AllCimiteriLabel":"- All cemetery managed by Aldilapp -",
+        "ErrorTitle":"Error",
+        "ErrorGen": "There was a problem trying to retrieve the data. Check your internet connection or try later.",
+        "WarnTitle":"Warning!",
+        "WarnNoData": "There are no results.",
+        "CancelText": "Cancel",
+        "DoneText": "Done"
+    },
+    "Results":{
+        "Title":"Results",
+        "NatoLabel":"Born on ",
+        "MortoLabel":"Died on "
+    },
+    "Detail":{
+        "NatoLabel":"Born on ",
+        "MortoLabel":"Died on ",
+        "TipoManufatto":"Artifact type",
+        "CimiteroLabel":"Cemetery",
+        "PosizioneLabel":"Current position",
+        "TipoPosizioneLabel":"Position type",
+        "AreaLabel":"Area",
+        "ZonaLabel":"Zone",
+        "InCaricamento":"Loading data...",
+        "AddButton":"Add to My relatives",
+        "GeoLabel": "Geolocation:",
+        "NonDefinita": "Not defined", 
+        "CancelButton": "Cancel",
+        "LoginButton": "Login",
+        "WarnAnonimoTitle": "Warning!",
+        "WarnAnonimoText": "This feature is reserved to only not anonymous user.",
+        "WarnDefuntoOkButton": "OK",
+        "WarnDefuntoExistsTitle": "Warning!",
+        "WarnDefuntoExistsText": "Selected deceased is alredy in your relatives"         
+    },
+    "MieiDefunti":{
+        "Title": "My relatives",
+        "AccediTitle": "Sign in",
+        "AccediSubTitle": "This feature is not available for anonymous users",
+        "PresentationTitle":"From this screen you will can:",
+        "PresentationHtmlContent":"<ul><li>View the list of your relatives</li><li>Quickly access the deceased card of one of your relatives</li></ul>",
+        "NessunDefuntoText1":"You haven't added any deceased yet",
+        "NessunDefuntoText2":"Click on the blue button below, search for a deceased and add it to your deceased."
+    },
+    "App":{
+        "AggiornaTitle":"Update app",
+        "AggiornaText":"A new realease is available.",
+        "AggiornaButton":"Update"
+    },
+    "Info":{
+        "Title":"Project informations",
+        "Html1":"<p class='pb-4'>Aldilapp is a project distributed and managed in Italy by STUP1 srls.</p><p class='pb-4'>The intent of the project is to encourage the digitization of cemetery registers and at the same time provide support to citizens in tracing the bodies of their friends and / or deceased relatives.</p><p class = 'pb-4'>If your municipality does not have an agreement with us, you cannot benefit from Aldilapp services, ask for informations via the reference site aldilapp.it</p>",
+        "Html2":"<p>The organizations that have joined to Aldilapp are:"
+    }
+}

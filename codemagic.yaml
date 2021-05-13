@@ -1,0 +1,88 @@
+workflows:
+  ionic-capacitor-ios-workflow:
+    name: Ionic Capacitor iOS Workflow - Aldilapp
+    max_build_duration: 120
+    instance_type: mac_mini
+    environment:
+      vars:
+        # Ionic Capacitor Xcode worskspace and scheme
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        # Manual Code Signing
+        # FCI_CERTIFICATE: Encrypted(...) # <-- Put your encrypted certificate file here
+        # FCI_CERTIFICATE_PASSWORD: Encrypted(...) # <-- Put your encrypted certificate password here
+        # FCI_PROVISIONING_PROFILE: Encrypted(...) # <-- Put your encrypted provisioning profile here
+        #
+        # Automatic Code Signing 
+        # https://docs.codemagic.io/yaml/distribution/
+        # https://appstoreconnect.apple.com/access/api
+        APP_STORE_CONNECT_ISSUER_ID: 5a067dc0-158b-4627-87ef-7ccef8815a29 # <-- Put your App Store Connect Issuer Id here
+        APP_STORE_CONNECT_KEY_IDENTIFIER: 932JA46C8C # <-- Put your App Store Connect Key Identifier here
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgX/CYWGPmXyG1B6f4QZbolbmhUEdM+wfSoCszvyA5ArmgCgYIKoZIzj0DAQehRANCAATaq4jMKUIJrJV5DdYjkinAnMlB//WeBm5zBucmKPRkrkI6ZFNrL8YbPyDGOtqoH60nI+1s2eJSD9K8KfpORU8S) # <-- Put your App Store Connect Private Key here
+        CERTIFICATE_PRIVATE_KEY: Encrypted(MIIEpAIBAAKCAQEA5JW85PvhAV9cKkSGoKtGuqEWPW/dPQNnmsYc/E77OcNfOhuEs+biGm47L0Xf7kqMyC6eZBu8+O1PQbgn1d9W0SHJOySXKxejUpRKqFRIYq0x9gc1IezZhcHSRWt1ZmpmDGIfNisO4FePzTeU8E6kgS6frYR8ksZtZfif2ZhNYyf1p+pCMgkMbY8qJv7TH47iAjd1bhQirUpGsYzfHliSiL5gV/pBmE9TRw35UhdzwJmlHRp2N0sg96yjsRJ8d2VNveqbnxyK/wgZwRG6FJ4SvuzzaS2sOwYZCBBdvIyHHSck/JzNfEXZqOAvp8IAWzaJChwbSsH+Y/txxgkEzSnhdwIDAQABAoIBAAXl4zDZWu3pIvyoNf0RTkrkeylsqH25h8PTls3fz9Wmt99M9Hib3XunGnnWyLdiTw2fPlEA8jhODzx33vdCwv+0anfPMuNWwc0QrHh5bEC3jVF20CUm8lnkLWPDKQ1Sc32gToPcSo75U2mNJJeqv83hgRc+EuTKn+oAp0c7CcwkIFHoD3O91TIQEswHOmjFUTrVkL6mxID3Z8IDIGMLoOzpNCCoFDlg6IgN1OtaFJ3m2C8aaHfIortdJlGbm43qn2bveCNp0cMg6LV4U7DNt2cuYG5OAUt/sl5NxvBa0+VXdZ9C+ue1aglIyw8IgXKRQc2WCAqK/QUDKq3PDTcF12ECgYEA+kpJo1V584xHCCkmY0Y6IZjZfm4UebyaqNQjBULYeXP7yVDNP0iGAygNnqO+hR8ZWkyAI8/ZbSsHfXvlMVm5W45KL6U6nnICXPp1nZUBGchGVJDPi66m3v+aeX/G15so8nSsY2DB/5djjeT/VpN47OXZNiVpcjFz1j9jCArAF7ECgYEA6cywnRMq4wBGo95aQ1ctY+O4j0PlJKp0dwvBmLvbirFtzk5y+Blq3ALJtOGrJDm6tzfCztE/9+zB9ho9nnPJHbOobyxNO5WMzThMTfuw7LdnPzcSV20v3KAhh96kpQlIFL/ctWUxiNFSy9+XJD5S0vft3toZyYKWMAsA+A4ZfacCgYEApZNdcaMLQRXsq7ZlQclkjXNLdnsmKn6dpdBotoNJJ9eVmtFMZm/4z7/AetECKZiwMe9n2ckXokOT+exra6FaoPnZk/lvdQAhFhdOlYfMKZ03AZym4FYS6HUZYQUpqtpnVTXgEQIidI5W+riiPkji93z6m/pV7ohOhE58mgZam5ECgYBhkdCq3JLrRPQ18tdMfxcsNp6Q+06nbJNKExfp+4v1Z3JhxI9qRoE369ntqLfZWFY5nAWqddzyRFX1tKG+fKeTw6QpMR3SHekyw6nkaYM+ZpOp5/u5jJGKyzDzGNExJpx0PFWJRf/UDzc0ac0TjQbXkCwu8moMlHjE9/KhkpDExQKBgQDOQHr0tROCsmd2+qQRSTJiZTIq25wrroTc9j0sK+jhZcjjlopbNGjBDhZC6ePDrmH6fVR1waSnXTuGlrMCQ1H25ewm/zsCQZQFflsQs96w450js01uYNpF4RR4JA0M6HpnJkm9gFpxb1/NvM9Jdxy56puV3/beIffdV1lBDt51fw==) # <-- Put your Certificate Private key here
+      node: latest
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: develop
+          include: true
+          source: true
+    scripts:
+      - name: Install npm dependencies for Ionic project
+        script: |
+                    npm install
+      - name: Cocoapods installation
+        script: |
+                    cd ios/App && pod install
+      - name: Update dependencies and copy web assets to native project
+        script: |
+          # npx cap copy # <- use this is you don't need to update native dependencies
+          npx cap sync # <- update native dependencies and copy web assets to native project          
+      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+        script: |
+                    keychain initialize
+      # - name: Set up Provisioning profiles from environment variables (Use with manual code signing)
+      #   script: |
+      #     PROFILES_HOME="$HOME/Library/MobileDevice/Provisioning Profiles"
+      #     mkdir -p "$PROFILES_HOME"
+      #     PROFILE_PATH="$(mktemp "$PROFILES_HOME"/$(uuidgen).mobileprovision)"
+      #     echo ${FCI_PROVISIONING_PROFILE} | base64 --decode > "$PROFILE_PATH"
+      #     echo "Saved provisioning profile $PROFILE_PATH"
+      - name: Fetch signing files
+        script: |
+          # app-store-connect fetch-signing-files "com.nevercode.ncionicapp" --type IOS_APP_STORE --create
+          app-store-connect fetch-signing-files "com.stup1.aldilapp" --type IOS_APP_STORE --create          
+      - name: Add certificates to keychain
+        script: |
+                    keychain add-certificates
+      - name: Increment build number
+        script: |
+          #!/bin/sh
+          set -e
+          set -x
+          cd $FCI_BUILD_DIR/ios/App
+          agvtool new-version -all $(($BUILD_NUMBER +1))          
+      - name: Set up code signing settings on Xcode project
+        script: |
+                    xcode-project use-profiles
+      - name: Build ipa for distribution
+        script: |
+                    xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
+    artifacts:
+        - build/ios/ipa/*.ipa
+        - /tmp/xcodebuild_logs/*.log
+        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        apple_id: it.issamconsultancy@gmail.com # <- put your Apple Id here
+        password: Encrypted(wdvv-tmsw-ohtd-sjnk) # <-- Put your App Specific Password. For more information visit: https://support.apple.com/en-us/HT204397
+      email:
+        recipients:
+          - it.issamconsultancy@gmail.com
+        notify:
+          success: false     # To not receive a notification when a build succeeds
+          failure: false     # To not receive a notification when a build fails

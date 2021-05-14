@@ -1,4 +1,5 @@
-ionic-capacitor-ios-app:
+workflows:
+  ionic-capacitor-ios-app:
         name: Ionic App
         environment:
             vars:

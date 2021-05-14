@@ -1,0 +1,89 @@
+workflows:
+  ionic-capacitor-ios-workflow:
+    name: Ionic Capacitor iOS Workflow - Aldilapp
+    max_build_duration: 120
+    instance_type: mac_mini
+    environment:
+      vars:
+        # Ionic Capacitor Xcode worskspace and scheme
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        # Manual Code Signing
+        # FCI_CERTIFICATE: Encrypted(...) # <-- Put your encrypted certificate file here
+        # FCI_CERTIFICATE_PASSWORD: Encrypted(...) # <-- Put your encrypted certificate password here
+        # FCI_PROVISIONING_PROFILE: Encrypted(...) # <-- Put your encrypted provisioning profile here
+        #
+        # Automatic Code Signing 
+        # https://docs.codemagic.io/yaml/distribution/
+        # https://appstoreconnect.apple.com/access/api
+        APP_STORE_CONNECT_ISSUER_ID: 5a067dc0-158b-4627-87ef-7ccef8815a29 # <-- Put your App Store Connect Issuer Id here
+        APP_STORE_CONNECT_KEY_IDENTIFIER: 932JA46C8C # <-- Put your App Store Connect Key Identifier here
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(Z0FBQUFBQmduaEE1RzYtWWY3ODlWYi1yNnFOR3lzcl85QXpST0dCWk16N3ZkVUxIcXAtTTBMSFdxY3ZnZGF6a29KMVpWbnY1VTdCYmpQcUxWRDhpTjZxMjVXTkhURld5N2VxZnhpTUNieDRlRk5HVjJudGdBTUdnWXhZcVN1X1E0SDhYdU5pRTZNd1NFOHo1VDMzZTNOSjNzeU5hYXRsUHNWZ20tN2ZPdlB4cFV2MHhlYUFHTnFRUElyYnd3OFRNT3QxRVpqQldiQUFGRlVicFd2ekxQM1RZX3g2MzJWbUNnWHVTajBKQTN4Sm1hSkdoSlpEY0I0V3JhTDd5X3JmbmJWTHp4a3dMTUItc1hTR0E3UkJaN3FtUFRuaGZ3TzF5QWh1SmtEU3hzaUNOVGctZldlcUpwZ282eTFpRE5ib3c1T01TYkttQkJIbk5obzIybGoxN1U2Rm9VblRWUUE2XzVRPT0=) # <-- Encrypted Put your App Store Connect Private Key here
+        CERTIFICATE_PRIVATE_KEY: Encrypted(Z0FBQUFBQmduZ19ObnZmbFVGdXdnZ3pCTHE0N1p1STRUZWVJR3VkUXctZHF2VUJRdFhvb2M3YWc4aTJEMS1aSmRLalhuNVN1bnVrclRjalh6cmhDXzdhTVA2UTF5eFJHUVlzbFJPT0w5RGs0eTFvVVQxbS10VzAtVFViN0NweGZsaTk0V3dPRzNTYm9oaWxDUFJyaUhOSUFXc3lObkN4b3FwWE9zREtvNElWMFFrVWFhNkt5YTU4VEpDNFhDQXUxWUM5MXJlbldFZmtET1hxdzQydmpvUldaOGFjQnhyRjQyTVUxcFZmYm1ja1cyU2NDb3Y3WlpjNjluSmdZc3hIa3ozVjQyY0M1THI1RjRnQlQ4M3RybHluclVoUTlseXVjUU5PNlQ2ZHJidGVvT1lFTTdWNFNKNE1BTEVqamFhdzg5NGp3Q3phQkVOY2ltbnRFTVp5RTQ2eWlaVWtqSUdRQUFVZUJLMjRGeDI1ZmkyVXlrTEZ3S2MxcGRVQXFFR0tnQ2Fnb1ptZXVOQ3FrVFgyeEFtbXdiaFd3LTctbEdjVDBVMVc5T05ZRWFsdDJ3MjNzRC1OLTNVTDA4MEVWckNCcnNFamg1NjNDb0Z4ai1JdlhuNFdwck53T0pHR3RkeWVVVkcwMnNQV2pzZVRMLVcwMGxNZEl2TFVqN1kzRE5QSGU3a3drODNOWDYwYU44dFdKY3h4ME5LMElXQms0Nk13d3hrTmVKcFdKamlxWmYxQnhoWkQ0alZRUHdhTjYweXBiSmtWSVZleDBZWDNNb0xJMFB0Q214cFBTSm9vWWxGUTdpXzBPTV9QWk9DaW5ONkVCVnUyb2w1ZzNVckdRZG1nV0NhblNtMzdyTHY1QXdXYmRjMmhEUnZ6LUZyb2dWWjM3LXlNdGhRbG95VzNmRkFlanN5RGxiZkZ1WGdjdWhQRm1WMnRnajhURFhscWtmU1lOaE1CaEp2VkVDUmY1Wmt2aGZ2a0h1SFh4bWk1UkRyX0ZqY3I2bUlDNmhHN095RG81cEVFTkkyTE5FdjNWcndSSV9uU2dGMEVuaVJIRF92OXoyUGlCUnh5b2JKNUpWSmdBOXBtNURpOWU0LU80Y3dFRjZFakhLYUY1NVJRclhxM1dDY1cyeERScDVfMTB0cEpwc2NiU2w2SkZEZlN6WTl1eDhkdjk3U1Itcm1uRGVnbUxjZDh2VmtJRlpsUDlFZjczdUhWanBzbDlXTkV0M251QXVkekJfajJZUkVkVm1nZmtLQjlnM09NMThDMjViYkEyLXh0OWtVaGRwSXdET2FibkdFMVJ2N3lUZEdvYmJyTzRoTkFQS3k0SlRzejdDaFVLMlNDVk1temZvcGc0cHYzb2x3dDFqRFVWU1hPR1VjMktOQnhXS0pibHJWVVJwZ09YdjJCN2JtRUNLQ3NremVlMm5OaWJUWHVGeEVzZms4MFJidVRiWGxIeGRfRl9mLWlpNzAxSVIxNGVhMkdPR212Y0dkcTkyWUFLZXBRb3kzQXBJX2FZYnJ6UWs0eGFwM0RfVXMwU3kyX3l3cTZkTVZxVmo3QkJhTTlzVU1oaFh5dUd0Nm16QWJNeXJGM2JrMVl0R01FZk9Ed2dTem5LX2RoRVNZeFg1V3VKZFRZQS00bE9WUndCMFNEUnc3NXVXdTd4LUJkN3EwNFlHSEZ4NXA0a3hUZzlRcFNpNVlSQVhJVjhHVF9yRlRjTXU0dllUWlBGV3RHenkzSnBQWjVxZG1ITXZHODNvZm1uTmlyTHcyRGVfbTJMbENlLTFqLV9PRTJiTGZrVW16TUZIOTZ4UF9ybGpPMmVDWEQxblY5aUZjWUFuSnhBcWRfQ3VjdXNibXhIcnBzekFjNGhsbE91N0hoYWZvWldFSUNKYnZrWDVQS0ZheEdkVDhqTlh4UEY3V2w0dndBVS1idk1Na2syeDdfbjNLTDZsN08wYkQ2YmtIZkJaWFJBZEtYUGV0Tm1OVVBtRXZWcGYtdzh6RldzaTNjV0drdFI0WnBteXZOOU85T3BFazdCTkpZNHVxOTQ3OW5vdzV6ZjRMYk9nZlpPOV95MW92WTVtQ1JlaUo1NTBvNjROWHlWeWtGT1R6WDZZUFk4dTdjdVR2UjBZTjhENks0a29YLVpuSUdmM1Q4cDk2Y1NlcUtmTmw5WGFSRjNrTW51aWF0MnFTbV96MF9CajJWbml1ZHdYdXJYT0VBQVpkRnNMbk9sM19wbEZYMDJKNzdBOWJfTW5CWmI3V0lTcE5SZ0lJV0Z5dzFBSXFpZkxfT19uSGJ3Ui00RnZuc2RrVUlhRTBDS3U3U1RCc1h4XzVxSjhmSlp2WlhyWTF3bWxHUEZPZUFmaDVVem0xMVRsT3ZJRGUtbS1WOHlVRHB3QU5mZms2NWxrMFJhMEs5dWlraS1EZlhVNEJNdHBKcHZTSUFwaEVmcEMydWJXeXZDTWNTU01EcXotak1pNkUwUDlrOVR1Q2lCYUd1R2lQQjZMY1pTU1BzNUxoSTJqUFgxZWFsT3pDTEZrbzMyTF9WdGNOU0Y4amlOamV2NzU5anpkZGVqNEl2ZkpYQUVKQ2xrdmppRVpwbG01SUxyZjlJcFZlNnkzemtTZDNMSW0wVktxZGhOWkNEYU5oZUc0VTVqQ3FMZ0FMN1c2eU1veG9iVjdKWHdGN2RXeXZ0dmQ1QUFJaWNGVWFzU25yUXJKSFBNbTBEa2VMX1JtYmdDUHVjODQ2QkZaZFNIejJDLW9XUzVseWJwaHdqSkxFdXRsb2Y2TkJGUDZmaW9sazIwNFZFTkZaWVk0UHhQWklIRW9yYjlOUV9YY0JPMGpwYjFIU2c1bHJNQ0hiZ1JKcHhLNEZ2dUhodUNGZnhCUXE5QzJCNDZFcVc2MHhpb1JuX3NyVEdJVV9qOUtsTGhNbGI3aERUXzBXdWpSX3pReFFUN2dSMUtGejI1b2ltS0xsLU5fdzZSbFJTb2lsakxmbnJ6T1MtajBPeUtnRFYtWGs4dEJrNWlsQ0xuWWlDaWRXVkZrbEpiRXFncnFZdk5zVEhYaTNOaVloMXhvSFV5SDhOZ09aR0U0MVA1T18xOVN3R1hpZmozcEN1Y1dGenZPaExST3BHcmVNX0NSdC1fLWhvdUtZTmp2aFM4WDgtQndLWlIxSGRpVElWSkZiVUFDZk1oMFJ0VU8tUDN3UGVGRHhKUlRYaHNKUUFwSjJ5cDFWdUpPZ0N3U0FweHdFa3Z5bUZjM3VpRkNYR2RLTUhXRVFHU2FxN3RkVF9YTUtzNjR2Yk1PZ19QWjVNZHR2TWNXT05DdC1MQTNMeHlOckJnNXJIdmRlNzNYeWZCRXV5ZGI4bl96M0hmUDlsZTFNdWZyby1ZdzJqQ2VOd1FMN28yTWhRUEJsc215RUFKM2lKLUNGbzd4VUhpOENfQTBrdHo5bFZmUWZWb0NxamFHa1NXMms4OW10azZkM3EwWldWQlJZWFhpMjN4ZlNzUnNySWN4RDZ4OEZfdXVFaEFEQWZBRWpDVnpSVXlaWEFWQTJocGRqNmhmTXo5cTFQTDNLWW5vUmxVNVJBQ1E3Y1VMTzBoMzdmYXV5ZVpUT0M0eFh5bnA4cGxZUzF0MmdsNGJENkxyREZzLTBIdHc0N0FBSV9MRVoyd2hWRjd6d2Z6WU9kZjVVWFB6c3pyWkFJSTdMTlRFLTlOTUxKdld6STFPQjBraHBlc3pKWVBjaDdiVV9RQnBVMlZYalQyT3ZZRWs1bzRRMzBhN3NzTmtNQlg5TTd2OUw4X2JVSnZwRkQ1bVd5QkItS3VHcFlnUnljWFZDZmFXRWdlOXJTRnJMRV9RZU5VV3FDV0laNWNuaUdwRHZ5RTRFOEZSZTR5LUlEUWs0SU5kNVNEYkRjMmhtTndhcE5MMUlBaHpZd0NGeXRuRlFVME1ZVEh3SFFJcFVpSW1GbG1VUGtmSzNuaW9xVWdGLVlsb3RYNjNkNEJKbVJXQ01MYTNDdDlmUE1vVGV5YmViYm96YmxFQ3U2cmNqX0FqVUI0SjBIRUpoQ01MQVRpTkpsQklxTXZvcElnNlpqb0RTQm9ZLVcxaURraVNyd2FKR3U1T0FkVlNEMU82bFpJTnRWT3dTNnUxVmo1) # <-- ENCRYPTED Put your Certificate Private key here
+      node: latest
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: develop
+          include: true
+          source: true
+    #scripts:
+      #- name: Install npm dependencies for Ionic project
+      #  script: |
+      #              npm install
+      #- name: Cocoapods installation
+      #  script: |
+      #              cd ios/App && pod install
+      #- name: Update dependencies and copy web assets to native project
+      #  script: |
+      #    # npx cap copy # <- use this is you don't need to update native dependencies
+      #    npx cap sync # <- update native dependencies and copy web assets to native project          
+      #- name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+      #  script: |
+      #              keychain initialize
+      # - name: Set up Provisioning profiles from environment variables (Use with manual code signing)
+      #   script: |
+      #     PROFILES_HOME="$HOME/Library/MobileDevice/Provisioning Profiles"
+      #     mkdir -p "$PROFILES_HOME"
+      #     PROFILE_PATH="$(mktemp "$PROFILES_HOME"/$(uuidgen).mobileprovision)"
+      #     echo ${FCI_PROVISIONING_PROFILE} | base64 --decode > "$PROFILE_PATH"
+      #     echo "Saved provisioning profile $PROFILE_PATH"
+      #- name: Fetch signing files
+      #  script: |
+      #    # app-store-connect fetch-signing-files "com.nevercode.ncionicapp" --type IOS_APP_STORE --create
+      #    app-store-connect fetch-signing-files "com.stup1.aldilapp" --type IOS_APP_STORE --create          
+      #- name: Add certificates to keychain
+      #  script: |
+      #              keychain add-certificates
+      #- name: Increment build number
+      #  script: |
+      #    #!/bin/sh
+      #    set -e
+      #    set -x
+      #    cd $FCI_BUILD_DIR/ios/App
+      #    agvtool new-version -all $(($BUILD_NUMBER +1))          
+      #- name: Set up code signing settings on Xcode project
+      #  script: |
+      #              xcode-project use-profiles
+      #- name: Build ipa for distribution
+      #  script: |
+      #              xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
+    #artifacts:
+     #   - build/ios/ipa/*.ipa
+     #   - /tmp/xcodebuild_logs/*.log
+     #   - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+     #   - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    #publishing:
+      #app_store_connect:
+      #  apple_id: it.issamconsultancy@gmail.com # <- put your Apple Id here
+      #  password: Encrypted(Z0FBQUFBQmduZzg5WG84NmlxSDFCUDZmVzVuYXVfcXkyU25FYm9OVk5MNkRLZmxHTnROak1oR0RpdEw4Sy13aUJieXpSZnBWR3A2TW9udVdDbE5HWnJ4aDNzU0VGNEtuZkg5X1pLaU1SMGRsYy1UMHBNVGNQQWs9) # <-- Put your App Specific Password. For more information visit: https://support.apple.com/en-us/HT204397
+      #email:
+      #  recipients:
+      #    - it.issamconsultancy@gmail.com
+      #  notify:
+      #    success: false     # To not receive a notification when a build succeeds
+      #    failure: false     # To not receive a notification when a build fails
+      

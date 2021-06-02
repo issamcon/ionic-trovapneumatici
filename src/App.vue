@@ -88,11 +88,11 @@ import {
   IonSplitPane,
 } from "@ionic/vue";
 import { computed, defineComponent, onBeforeMount } from "vue";
-import { auth } from "@/main";
+import { auth } from "./main";
 import { languageOutline, logOutOutline } from "ionicons/icons";
 import { useStore } from "vuex";
 import { key, Platform } from "./store";
-import { StorageService } from "@/services/storage.service";
+import { StorageService } from "./services/storage.service";
 import { useRouter } from "vue-router";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -239,9 +239,7 @@ export default defineComponent({
         if (user) {
           store
             .dispatch("setAuth", { user: user, platform: platformObj })
-            .then(() => {
-              //onsole.log('Current route',router.currentRoute.value);
-              //console.log('Route to', routeAfterSignIn.value)
+            .then((): void => {
               if (router.currentRoute.value.fullPath != routeAfterSignIn.value){
                 router.push(routeAfterSignIn.value);
               }
@@ -259,11 +257,11 @@ export default defineComponent({
       isAnonymous: computed(() => store.state.auth?.user?.isAnonymous ?? false),
       nome: computed(
         () =>
-          store.state.auth?.user?.displayName ?? store.state.lang.Auth.Anonimo
+          store.state.auth?.nominativo ?? store.state.lang.Auth.Anonimo
       ),
       photoURL: computed(
-        () =>
-          store.state.auth?.user?.photoURL ??
+        (): any =>
+          store.state.auth?.photoURL ??
           require("/public/assets/logo/logo-aldilapp-social-512x512.png")
       ),
       email: computed(() => store.state.auth?.user?.email ?? ""),

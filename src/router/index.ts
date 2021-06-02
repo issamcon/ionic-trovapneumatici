@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import Tabs from '../views/Tabs.vue'
+import Tabs from '../views/Tabs.vue';
+import Tab1 from '../views/Tab1.vue';
+import Tab2 from '../views/Tab2.vue';
+import Tab3 from '../views/Tab3.vue';
+import TabInfo from '../views/TabInfo.vue';
+import Results from '../views/Results.vue';
+import Detail from '../views/Detail.vue';
 import { RouteRecordRaw, RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
 import { auth } from '../main'
 //import { store } from "../store";
@@ -50,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/login',
-    component: () => import('@/views/Auth.vue')
+    component: () => import('../views/Auth.vue')
   },
   {
     path: '/tabs/',
@@ -62,32 +68,32 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab1',
-        component: () => import('@/views/Tab1.vue'),
+        component: Tab1,
         beforeEnter: guard
       },
       {
         path: 'tab1/results',
-        component: () => import('@/views/Results.vue'),
+        component: Results,
         beforeEnter: guard
       },
       {
         path: 'tab1/detail/:id',
-        component: () => import('@/views/Detail.vue'),
+        component: Detail,
         //beforeEnter: guard
       },
       {
         path: 'tab2',
-        component: () => import('@/views/Tab2.vue'),
+        component: Tab2,
         beforeEnter: guard
       },
       {
         path: 'tab3',
-        component: () => import('@/views/Tab3.vue'),
+        component: Tab3,
         beforeEnter: guard
       },
       {
         path: 'tab4',
-        component: () => import('@/views/TabInfo.vue'),
+        component: TabInfo,
         beforeEnter: guard
       }
     ]

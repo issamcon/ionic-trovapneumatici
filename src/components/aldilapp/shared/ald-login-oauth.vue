@@ -1,4 +1,5 @@
 <template>
+
   <ion-card-content>
     <ion-button
       v-if="authState.mode === AuthMode.SignIn && showGoogleSignIn"
@@ -44,9 +45,9 @@
     >
       {{ lang.Auth.AccediAnonimo }}
     </ion-button>
-  </ion-card-content>
-  <ion-card-content v-if="authState.errorMsg" class="error-message">
+    <div class="alert alert-danger error-message" v-if="authState.errorMsg">
     {{ authState.errorMsg }}
+  </div>
   </ion-card-content>
 </template>
 
@@ -54,7 +55,7 @@
 <script lang="ts">
 import { IonCardContent, IonButton, IonIcon, isPlatform, alertController } from "@ionic/vue";
 import { computed, defineComponent } from "vue";
-import { auth } from "@/main";
+import { auth } from "../../../main";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { key, AuthMode } from "../../../store";
@@ -96,11 +97,12 @@ export default defineComponent({
     IonIcon,
   },
   setup(props) {
+    
     registerWebPlugin(SignInWithApple);
     const store = useStore(key);
     const router = useRouter();
-    const showAppleSignIn = isPlatform("ios");
-    const showGoogleSignIn = isPlatform("android");
+    const showAppleSignIn = isPlatform("ios") || isPlatform("iphone") || isPlatform("ipad");
+    const showGoogleSignIn = !showAppleSignIn;
     const lang = computed(() => store.state.lang);
     const options: SignInWithAppleOptions = {
       clientId: "com.stup1.aldilapp",
@@ -176,9 +178,14 @@ export default defineComponent({
     };
 
     const signInWithAppleLogin = async (): Promise<void> => {
-      const appleUser: SignInWithAppleResponse = await Plugins.SignInWithApple.authorize(
-        options
-      );
+      const options: SignInWithAppleOptions = {
+  clientId: 'com.stup1.aldilapp',
+  redirectURI: 'https://aldilapp-ae56b.firebaseapp.com/__/auth/handler',
+  scopes: 'email name',
+  state: '12345',
+  nonce: 'nonce',
+};
+      const appleUser: SignInWithAppleResponse = await Plugins.SignInWithApple.authorize();
       const provider = new firebase.auth.OAuthProvider("apple.com");
       const credential = provider.credential(appleUser.response.identityToken);
       await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);

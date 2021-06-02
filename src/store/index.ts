@@ -16,6 +16,8 @@ export enum AuthMode {
 
 export interface Authentication {
     user: firebase.User | null;
+    nominativo: string | null;
+    photoURL: string | null;
     isAuth: boolean;
     errorMsg: string;
     mode: AuthMode;
@@ -77,7 +79,7 @@ export interface State {
     langs: Array<string>;
     lang: any;
     appSettings: AppSetting | null;
-    
+
 }
 
 export interface Platform {
@@ -104,6 +106,8 @@ export const store = createStore<State>({
     state: {
         auth: {
             user: null,
+            nominativo: null,
+            photoURL: null,
             isAuth: false,
             errorMsg: '',
             mode: AuthMode.SignIn,
@@ -149,21 +153,17 @@ export const store = createStore<State>({
                         AppVerNumber: payload.platform.appVerNumber,
                         AppVerCode: payload.platform.appVerCode
                     };
+                    console.log('Request:', postData);
                     const response = await axios.post(
                         "https://dev.aldilapp.it/api/appusers",
                         postData,
                         axiosRequestConfig
                     );
-
+                    console.log('Response:', response);
                     if (response.status == 200 || response.status == 201) {
-                        const dbUserId = response.data.id;
-                        commit("setDbUserId", dbUserId);
-                        if (dbUserId) {
-                            const response2 = await axios.get("https://dev.aldilapp.it/api/appusers/" + dbUserId + "/defunti");
-                            if (response2.status == 200 || response2.status == 201) {
-                                commit("setMieiDefunti", response2.data.mieiDefunti);
-                            }
-                        }
+                        console.log('User da db:', response.data);
+                        commit("setDbUser", response.data.user);
+                        commit("setMieiDefunti", response.data.mieiDefunti);
                     }
                 }
             }
@@ -190,7 +190,7 @@ export const store = createStore<State>({
         setCurrentItem({ commit }, payload: ResultItem) {
             commit("setCurrentItem", payload);
         },
-        setRouteAfterSignIn({commit}, payload: string){
+        setRouteAfterSignIn({ commit }, payload: string) {
             commit("setRouteAfterSignIn", payload);
         },
 
@@ -286,12 +286,12 @@ export const store = createStore<State>({
             await axios.get(
                 "https://dev.aldilapp.it/api/AppSettings",
                 axiosRequestConfig
-            ).then((resp) => { 
-                if (resp.status == 200 || resp.status == 201){
+            ).then((resp) => {
+                if (resp.status == 200 || resp.status == 201) {
                     commit("setAppSetting", resp.data);
-                }        
-            }).catch((err) => { 
-                console.log(err);    
+                }
+            }).catch((err) => {
+                console.log(err);
             });
         },
 
@@ -312,8 +312,10 @@ export const store = createStore<State>({
             state.auth.errorMsg = "";
             state.auth.mode = AuthMode.SignIn;
         },
-        setDbUserId(state: any, dbUserId: number) {
-            state.auth.dbUserId = dbUserId;
+        setDbUser(state: any, appUser: any) {
+            state.auth.dbUserId = appUser.id;
+            state.auth.photoURL = appUser.photoUrl;
+            state.auth.nominativo = appUser.nominativo;
         },
         setRequestUpdate(state: any, update: boolean) {
             state.auth.requestUpdateApp = update;
@@ -365,6 +367,8 @@ export const store = createStore<State>({
             state.auth = {
                 user: null,
                 isAuth: false,
+                nominativo: null,
+                photoURL: null,
                 errorMsg: '',
                 mode: AuthMode.SignIn,
                 dbUserId: null,
@@ -373,21 +377,19 @@ export const store = createStore<State>({
             state.mieiDefunti = [];
         },
 
-        setRouteAfterSignIn(state: any, payload: string)
-        {
+        setRouteAfterSignIn(state: any, payload: string) {
             state.auth.routeAfterSignIn = payload;
         },
 
-        setAppSetting(state: any, payload: any)
-        {
-            state.appSettings= {
+        setAppSetting(state: any, payload: any) {
+            state.appSettings = {
                 lastIosVerCode: payload.lastVerCodeIos,
                 lastIosVerNum: payload.lastVerNumIos,
                 lastAndroidVerCode: payload.lastVerCodeAndroid,
-                lastAndroidVerNum:  payload.lastVerNumAndroid,
+                lastAndroidVerNum: payload.lastVerNumAndroid,
                 iosAppId: payload.appleAppId,
                 androidAppId: payload.androidAppId,
-                forceUpdete: false,               
+                forceUpdete: false,
             }
         }
     }

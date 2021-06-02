@@ -11,7 +11,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-padding map-backgorund">
+    <ion-content :fullscreen="true" class="map-backgorund">
       <div id="container"></div>
       <ion-card>
         <ion-card-header>
@@ -56,9 +56,9 @@ import {
   IonMenuButton
 } from "@ionic/vue";
 
-import aldLogo from "@/components/aldilapp/shared/ald-logo.vue";
+import aldLogo from "../components/aldilapp/shared/ald-logo.vue";
 //import aldLoginBase from "@/components/aldilapp/shared/ald-login-base.vue";
-import aldLoginOauth from "@/components/aldilapp/shared/ald-login-oauth.vue";
+import aldLoginOauth from "../components/aldilapp/shared/ald-login-oauth.vue";
 import { useStore, mapActions } from "vuex";
 import { key } from "../store";
 import { computed, defineComponent } from "vue";
@@ -101,7 +101,7 @@ export default defineComponent({
 });
 </script>
 
-<style  scoped>
+<style  type="text/css" scoped>
 .center {
   display: flex;
   height: 90vh;

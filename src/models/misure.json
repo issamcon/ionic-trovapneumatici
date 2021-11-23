@@ -1,0 +1,248 @@
+{
+    "auto":{
+        "larghezze": [
+            { "text": "185", "value": "185" },
+            { "text": "195", "value": "195" },
+            { "text": "215", "value": "215" }
+        ],
+        "185":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "195":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "205":{
+            "altezze":[
+                { "text": "50", "value": "50" },
+                { "text": "55", "value": "55" },
+                { "text": "60", "value": "60" }
+            ],
+            "50":{
+                "diametri":[
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "55":{
+                "diametri":[
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "60":{
+                "diametri":[
+                    { "text": "14", "value": "14" }
+                ]
+            }
+        }
+    },
+    "moto":{
+        "larghezze": [
+            { "text": "120", "value": "120" },
+            { "text": "130", "value": "130" },
+            { "text": "140", "value": "140" }
+        ],
+        "120":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "130":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "140":{
+            "altezze":[
+                { "text": "50", "value": "50" },
+                { "text": "55", "value": "55" },
+                { "text": "60", "value": "60" }
+            ],
+            "50":{
+                "diametri":[
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "55":{
+                "diametri":[
+                    { "text": "15", "value": "15" }                
+                ]
+            },
+            "60":{
+                "diametri":[                  
+                    { "text": "14", "value": "14" }
+                ]
+            }
+        }
+    },
+    "tutti":{
+        "larghezze": [
+            { "text": "120", "value": "120" },
+            { "text": "130", "value": "130" },
+            { "text": "140", "value": "140" }
+        ],
+        "120":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "130":{
+            "altezze":[
+                { "text": "80", "value": "80" },
+                { "text": "75", "value": "75" },
+                { "text": "70", "value": "70" }
+            ],
+            "80":{
+                "diametri":[
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "75":{
+                "diametri":[
+                    { "text": "13", "value": "13" },
+                    { "text": "14", "value": "14" },
+                    { "text": "15", "value": "15" }
+                ]
+            },
+            "70":{
+                "diametri":[
+                    { "text": "13", "value": "13" }
+                ]
+            }
+        },
+        "140":{
+            "altezze":[
+                { "text": "50", "value": "50" },
+                { "text": "55", "value": "55" },
+                { "text": "60", "value": "60" }
+            ],
+            "50":{
+                "diametri":[
+                    { "text": "15", "value": "15" },
+                    { "text": "16", "value": "16" }
+                ]
+            },
+            "55":{
+                "diametri":[
+                    { "text": "15", "value": "15" }                
+                ]
+            },
+            "60":{
+                "diametri":[                  
+                    { "text": "14", "value": "14" }
+                ]
+            }
+        }
+    }
+}

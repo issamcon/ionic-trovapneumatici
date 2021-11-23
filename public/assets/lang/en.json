@@ -4,40 +4,40 @@
         "Lingua":"Language",
         "it":"Italiano",
         "en":"English",
-        "Logout":"Logout"
+        "Logout":"Logout",
+        "Terms": "Service Terms"
     },
     "Auth":{
         "Title":"Login",
-        "WelcomeText":"Welcome to Aldilapp!",
+        "WelcomeText":"Welcome to Trovapneumatici!",
+        "Slogan":"<ion-text><h5>Search your new tyres and find website with best offer.</h5></ion-text>",
         "AccediConGoogle":"Sign in with Google",
         "AccediConApple":"Sign in with Apple",
         "AccediAnonimo":"Enter as Anonymous",
         "Oppure":"or",
         "Anonimo":"Anonymous",
-        "PresentationText":"<ion-text><h6>Search easily for your deceased in a cemetery</h6></ion-text><p>When you are in a cemetery looking for a loved one, through a simple search by name you can find out the exact spot where he is buried.</p><p>Many other interesting services will soon be integrated into the app.</p>",
+        "PresentationText":"<p>Anonymous user has some limitations: <ul><li>Price monitoring</li><li>Pice alerting</li><li>Discount alerting</li></ul></p>",
         "AuthFallitaTitle":"Login failed"
     },
     "Tabs":{
         "TitleTab1":"Search",
-        "TitleTab2":"My relatives",
-        "TitleTab4":"Informazioni"
+        "TitleTab2":"Favorites",
+        "TitleTab4":"News",
+        "TitleTab5":"Account"
     },
     "Search":{
-        "Title":"Search a deceased",
+        "Title":"Search by tyre sizes",
         "SubTitle":"Enter all the data you have",
-        "CognomeLabel":"Lastname of the deceased",
-        "NomeLabel":"Firstname of the deceased",
-        "DataNascitaLabel":"Birth date",
-        "DataMorteLabel":"Death date",
-        "Cimiterolabel":"Burial cemetery",
-        "SearchButton":"Search",
-        "AllCimiteriLabel":"- All cemetery managed by Aldilapp -",
+        "SearchButton":"SEARCH AND COMPARE",
         "ErrorTitle":"Error",
         "ErrorGen": "There was a problem trying to retrieve the data. Check your internet connection or try later.",
         "WarnTitle":"Warning!",
         "WarnNoData": "There are no results.",
         "CancelText": "Cancel",
-        "DoneText": "Done"
+        "DoneText": "Done",
+        "WLabel":"Width",
+        "HLabel":"Height",
+        "DLabel":"Diameter"
     },
     "Results":{
         "Title":"Results",
@@ -65,14 +65,14 @@
         "WarnDefuntoExistsTitle": "Warning!",
         "WarnDefuntoExistsText": "Selected deceased is alredy in your relatives"         
     },
-    "MieiDefunti":{
-        "Title": "My relatives",
+    "Favorites":{
+        "Title": "My favorites",
         "AccediTitle": "Sign in",
         "AccediSubTitle": "This feature is not available for anonymous users",
         "PresentationTitle":"From this screen you will can:",
         "PresentationHtmlContent":"<ul><li>View the list of your relatives</li><li>Quickly access the deceased card of one of your relatives</li></ul>",
-        "NessunDefuntoText1":"You haven't added any deceased yet",
-        "NessunDefuntoText2":"Click on the blue button below, search for a deceased and add it to your deceased."
+        "NoFavoritesText1":"You haven't added any deceased yet",
+        "NoFavoritesText2":"Click on the PLUS button below, search for a deceased and add it to your deceased."
     },
     "App":{
         "AggiornaTitle":"Update app",

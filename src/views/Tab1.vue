@@ -1,17 +1,21 @@
 <template>
   <ion-page>
-    <ion-header  class="ion-no-border">
+    <!--<ion-header class="ion-no-border">
       <ion-toolbar color="primary">
         <ion-buttons slot="end">
-          <ion-menu-button></ion-menu-button>
+          <ion-menu-button @click="openFirst()"></ion-menu-button>
         </ion-buttons>
         <ion-title>
           <ald-logo></ald-logo>
         </ion-title>
       </ion-toolbar>
+    </ion-header>-->
+    <ion-header >
+      <ion-toolbar>
+        <ion-title>{{lang.Search.Title}} </ion-title>
+      </ion-toolbar>
     </ion-header>
-    <ion-content class="map-backgorund">
-      
+    <ion-content class="my-content">
       <!--<ion-header collapse="condense" class="ion-no-border">
         <ion-toolbar color="primary">
           <ion-buttons slot="end">
@@ -23,71 +27,73 @@
         </ion-toolbar>
       </ion-header>-->
 
-      <div id="container"></div>
+      <ion-text>
+        <h6>{{ lang.Search.SubTitle }}</h6>
+      </ion-text>
 
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title color="secondary">
-            <h3 class="secondary">{{ lang.Search.Title }}</h3>
-          </ion-card-title>
-          <ion-card-subtitle>{{ lang.Search.SubTitle }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <!--<v-form v-slot="{ values, errors }" @submit="onSubmit">-->
-          <v-form @submit="onSubmit">
-            <ion-item>
-              <ion-label position="stacked">{{
-                lang.Search.CognomeLabel
-              }}</ion-label>
-              <v-field name="cognome" v-slot="{ field }" :rules="isRequired">
-                <ion-input name="cognome" v-bind="field"></ion-input>
-              </v-field>
-            </ion-item>
-            <v-error-message name="cognome" class="error" />
+      <ion-segment
+        @ionChange="segmentChanged($event)"
+        color="secondary"
+        value="auto"
+      >
+        <ion-segment-button value="auto">
+          <ion-label>Auto</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="moto">
+          <ion-label>Moto</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="tutti">
+          <ion-label>Tutti</ion-label>
+        </ion-segment-button>
+      </ion-segment>
 
-            <ion-item>
-              <ion-label position="stacked">{{
-                lang.Search.NomeLabel
-              }}</ion-label>
-              <v-field name="nome" v-slot="{ field }" :rules="isRequired">
-                <ion-input name="nome" v-bind="field"></ion-input>
-              </v-field>
-            </ion-item>
-            <v-error-message name="nome" class="error" />
+      <img
+        src="/assets/img/misure_ridotto.png"
+        alt="misure pneumatico"
+        class="center"
+      />
 
-            <ion-item>
-              <ion-label position="floating">{{
-                lang.Search.DataNascitaLabel
-              }}</ion-label>
-              <v-field name="dataNascita" v-slot="{ field }">
-                <ion-datetime
-                  v-bind="field"
-                  min="1850"
-                  display-format="DD/MM/YYYY"
-                  placeholder=""
-                  :cancel-text="lang.Search.CancelText"
-                  :done-text="lang.Search.DoneText"
-                ></ion-datetime>
-              </v-field>
-            </ion-item>
+      <!--<v-form v-slot="{ values, errors }" @submit="onSubmit">-->
+      <v-form @submit="onSubmit">
+        <ion-list lines="full">
+          <ion-item>
+            <ion-label>{{ lang.Search.WLabel }}</ion-label>
+            <ion-button class="btnPicker" @click="openPickerLarghezza">{{
+              picked.larghezza == "" ? "SELEZIONA" : picked.larghezza
+            }}</ion-button>
+          </ion-item>
 
-            <ion-item>
-              <ion-label position="floating">{{
-                lang.Search.DataMorteLabel
-              }}</ion-label>
-              <v-field name="dataMorte" v-slot="{ field }">
-                <ion-datetime
-                  v-bind="field"
-                  min="1850"
-                  display-format="DD/MM/YYYY"
-                  placeholder=""
-                  :cancel-text="lang.Search.CancelText"
-                  :done-text="lang.Search.DoneText"
-                ></ion-datetime>
-              </v-field>
-            </ion-item>
+          <ion-item v-if="picked.larghezza != ''">
+            <ion-label>{{ lang.Search.HLabel }}</ion-label>
+            <ion-button class="btnPicker" @click="openPickerAltezza">{{
+              picked.altezza == "" ? "Seleziona" : picked.altezza
+            }}</ion-button>
+          </ion-item>
 
-            <ion-item lines="none">
+          <ion-item v-if="picked.larghezza != '' && picked.altezza != ''">
+            <ion-label>{{ lang.Search.DLabel }}</ion-label>
+            <ion-button class="btnPicker" @click="openPickerDiametro">{{
+              picked.diametro == "" ? "Seleziona" : picked.diametro
+            }}</ion-button>
+          </ion-item>
+
+          <!--<ion-item>
+            <ion-label>{{ lang.Search.HLabel }}</ion-label>
+            <v-field name="h" v-slot="{ field }" :rules="isRequired">
+              <ion-input name="h" v-bind="field"></ion-input>
+            </v-field>
+          </ion-item>
+          <v-error-message name="h" class="error" />
+
+          <ion-item>
+            <ion-label>{{ lang.Search.DLabel }}</ion-label>
+            <v-field name="d" v-slot="{ field }" :rules="isRequired">
+              <ion-input name="d" v-bind="field"></ion-input>
+            </v-field>
+          </ion-item>
+          <v-error-message name="d" class="error" />-->
+
+          <!--<ion-item lines="none">
               <ion-label position="floating">{{
                 lang.Search.Cimiterolabel
               }}</ion-label>
@@ -98,7 +104,7 @@
                   v-model="comune"
                 >
                   <ion-select-option value="0">{{
-                    lang.Search.AllCimiteriLabel
+                    lang.Search.All
                   }}</ion-select-option>
                   <ion-select-option
                     :value="c.id"
@@ -108,23 +114,28 @@
                   >
                 </ion-select>
               </v-field>
-            </ion-item>
-            <!--<ion-item lines="none"></ion-item>-->
-            <ion-button
-              type="submit"
-              color="secondary"
-              expand="block"
-              size="large"
-            >
-              {{ lang.Search.SearchButton }}
-            </ion-button>
+            </ion-item>-->
+        </ion-list>
+        <!--<ion-item lines="none"></ion-item>-->
 
-            <!--<div class="btnContainer">
-              
-            </div>-->
-          </v-form>
-        </ion-card-content>
-      </ion-card>
+        <div class="btnContainer">
+          <ion-button v-if="!isLoading"
+            type="submit"
+            color="secondary"
+            expand="block"
+            size="large"
+            class="ion-no-margin"
+          >
+            {{ lang.Search.SearchButton }}
+          </ion-button>
+
+          <ion-button v-if="isLoading" disabled="true" color="secondary"
+            expand="block" size="large" class="ion-no-margin" >
+            <ion-spinner slot="start" name="crescent"></ion-spinner>
+            Caricamento...
+          </ion-button>
+        </div>
+      </v-form>
     </ion-content>
   </ion-page>
 </template>
@@ -138,30 +149,39 @@ import {
   IonContent,
   IonLabel,
   //IonSegment, IonSegmentButton,
-  //IonText,
+  IonText,
   IonItem,
-  IonSelect,
-  IonSelectOption,
-  IonInput,
-  IonDatetime,
+  IonList,
+  //IonSelect,
+  //IonSelectOption,
+  //IonInput,
+  //IonDatetime,
   IonButton,
-  IonMenuButton,
-  IonButtons,
+  //IonMenuButton,
+  //IonButtons,
+  IonSegment,
+  IonSegmentButton,
   alertController,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  useBackButton, useIonRouter
+  //IonCard,
+  //IonCardContent,
+  //IonCardHeader,
+  //IonCardSubtitle,
+  //IonCardTitle,
+  useBackButton,
+  useIonRouter,
+  pickerController,
+  IonSpinner
+  //menuController
 } from "@ionic/vue";
-import { computed, defineComponent } from "vue";
-import aldLogo from "@/components/aldilapp/shared/ald-logo.vue";
+import { computed, defineComponent, ref } from "vue";
+//import aldLogo from "@/components/aldilapp/shared/ald-logo.vue";
 import * as V from "vee-validate/dist/vee-validate";
 import { useStore, mapActions } from "vuex";
 import { key } from "../store";
 import { useRouter } from "vue-router";
-import { Plugins } from '@capacitor/core';
+import { Plugins } from "@capacitor/core";
+import { SizeService } from "@/services/product.service";
+import { SearchFilter } from "@/models/index";
 const { App } = Plugins;
 
 export default defineComponent({
@@ -174,33 +194,42 @@ export default defineComponent({
     IonPage,
     IonItem,
     IonLabel,
-    IonInput,
-    IonDatetime,
+    //IonInput,
+    //IonDatetime,
     IonButton,
-    IonMenuButton,
-    IonButtons,
-    //IonSegment, IonSegmentButton,IonLabel,
-    //IonText,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    aldLogo,
-    IonSelect,
-    IonSelectOption,
-    VField: V.Field,
+    //IonMenuButton,
+    //IonButtons,
+    IonSegment,
+    IonSegmentButton, //,IonLabel,
+    IonText,
+    IonList,
+    //IonCard,
+    //IonCardContent,
+    //IonCardHeader,
+    //IonCardSubtitle,
+    //IonCardTitle,
+    //aldLogo,
+    //IonSelect,
+    //IonSelectOption,
+    //VField: V.Field,
     VForm: V.Form,
-    VErrorMessage: V.ErrorMessage,
+    IonSpinner
+    //VErrorMessage: V.ErrorMessage,
+    
   },
   data() {
-    return {};
+    return {
+      picked: {
+        tipo: "auto",
+        larghezza: "205",
+        altezza: "55",
+        diametro: "16",
+      },
+    };
   },
   methods: {
-    ...mapActions(["fetchCimiteri", "searchDefunti", "selectDetail"]),
-    async LoadData() {
-      await this.fetchCimiteri();
-    },
+    ...mapActions(["searchProducts"]),
+    
     async PresentAlertError(title: string, msg: string) {
       const alert = await alertController.create({
         cssClass: "my-alert-class",
@@ -213,9 +242,18 @@ export default defineComponent({
       const { role } = await alert.onDidDismiss();
       console.log("onDidDismiss resolved with role", role);
     },
-    async onSubmit(filter: any): Promise<void> {
-      console.log(filter);
-      const res = await this.searchDefunti(filter);
+    async onSubmit(): Promise<void> {
+      this.setIsLoading(true);
+      const filter: SearchFilter = {
+        category: this.picked.tipo,
+        w: this.picked.larghezza,
+        h: this.picked.altezza,
+        d: this.picked.diametro,
+        pageNum: 1,
+        pageSize: 12
+      };
+      const res = await this.searchProducts(filter);
+      
       if (!res) {
         this.PresentAlertError(
           this.lang.Search.ErrorTitle,
@@ -227,7 +265,7 @@ export default defineComponent({
           this.lang.Search.WarnNoData
         );
       } else if (this.resultsCount == 1) {
-        const id = this.results[0].defunti[0].id;
+        const id = this.results[0].ItemId;
         const url = "tab1/detail/" + id;
         //this.selectDetail();
         this.router.push(url);
@@ -236,19 +274,130 @@ export default defineComponent({
         this.router.push("tab1/results");
         console.log("GoTo Result", "tab1/results");
       }
+      this.setIsLoading(false);
     },
-  },
-  created() {
-    const store = useStore(key);
-    if (store.state.cimiteri == undefined || store.state.cimiteri.length == 0) {
-      this.LoadData();
-      console.log("Caricamento anagrafica cimiteri");
-    }
+
+    segmentChanged(ev: CustomEvent) {
+      console.log("Segment changed", ev.detail.value);
+      this.picked.tipo = ev.detail.value;
+      this.picked.larghezza = "";
+      this.picked.altezza = "";
+      this.picked.diametro = "";
+    },
+
+    getPickingOptions(values: string[]) {
+      const result: any = [];
+      values.forEach((item: string) => {
+        return result.push({ text: item, value: item });
+      });
+      return result;
+    },
+
+    async openPickerLarghezza() {
+      const options = await SizeService.getLarghezze(this.picked.tipo);
+      console.log("Larghezze", options);
+      const defaultValue = this.picked.tipo == "moto" ? "120" : "205";
+      const pickingOptions = {
+        name: "Larghezza",
+        selectedIndex:
+          this.picked.larghezza != ""
+            ? options.indexOf(this.picked.larghezza)
+            : options.indexOf(defaultValue),
+        options: this.getPickingOptions(options),
+      };
+      const picker = await pickerController.create({
+        columns: [pickingOptions],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Confirm",
+            handler: (value) => {
+              this.picked.larghezza = value.Larghezza.value;
+              console.log("Picked larghezza", this.picked.larghezza);
+            },
+          },
+        ],
+      });
+      await picker.present();
+      console.log();
+    },
+
+    async openPickerAltezza() {
+      const options = await SizeService.getAltezze(this.picked.larghezza);
+      const defaultValue = this.picked.tipo == "moto" ? "70" : "55";
+
+      const pickingOptions = {
+        name: "Altezza",
+        selectedIndex:
+          this.picked.altezza != ""
+            ? options.indexOf(this.picked.altezza)
+            : options.indexOf(defaultValue),
+        options: this.getPickingOptions(options),
+      };
+      const picker = await pickerController.create({
+        columns: [pickingOptions],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Confirm",
+            handler: (value) => {
+              this.picked.altezza = value.Altezza.value;
+              console.log("Picked altezza", this.picked.altezza);
+            },
+          },
+        ],
+      });
+      await picker.present();
+      console.log();
+    },
+
+    async openPickerDiametro() {
+      const defaultValue = this.picked.tipo == "moto" ? "17" : "16";
+      const options = await SizeService.getDiametri(
+        this.picked.larghezza,
+        this.picked.altezza
+      );
+      const pickingOptions = {
+        name: "Diametro",
+        selectedIndex:
+          this.picked.diametro != ""
+            ? options.indexOf(this.picked.diametro)
+            : options.indexOf(defaultValue),
+        options: this.getPickingOptions(options),
+      };
+      const picker = await pickerController.create({
+        columns: [pickingOptions],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Confirm",
+            handler: (value) => {
+              this.picked.diametro = value.Diametro.value;
+              console.log("Picked diametro", this.picked.diametro);
+            },
+          },
+        ],
+      });
+      await picker.present();
+      console.log();
+    },
   },
   setup() {
     const store = useStore(key);
     const router = useRouter();
     const ionRouter = useIonRouter();
+    const isLoading = ref(false); 
+    const setIsLoading = (state: boolean) => (isLoading.value = state);
+
     useBackButton(-1, () => {
       if (!ionRouter.canGoBack()) {
         App.exitApp();
@@ -268,15 +417,14 @@ export default defineComponent({
     return {
       router,
       isRequired,
-      comune: "0",
+      isLoading,
       authetication: computed(() => store.state.auth),
-      allCimiteri: computed(() => store.state.cimiteri),
       searchSuccess: computed(() => store.state.searchSuccess),
       resultErrorMessage: computed(() => store.state.searchResultMessage),
       resultsCount: computed(() => store.state.searchResultsCount),
       results: computed(() => store.state.results),
       lang: computed(() => store.state.lang),
-
+      setIsLoading
       //...mapGetters([
       //"allCimiteri",
       //'anotherGetter',
@@ -288,16 +436,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 .optionContainer {
   margin: 20px 0px;
 }
 .btnContainer {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
+  /*position: fixed;
+  bottom: 10px;
+  left: 0px;*/
+
   width: 100%;
-  padding: 15px;
+  padding: 20px 3% 5px 3%;
 }
 .error {
   color: red;
@@ -306,8 +454,30 @@ export default defineComponent({
   font-style: italic;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 
+.btnPicker {
+  font-size: larger;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  margin: 5px;
+  min-height: 1.8em;
+  min-width: 3em;
+}
 
-
+.my-content {
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+}
 
 </style>

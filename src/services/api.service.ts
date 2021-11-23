@@ -21,8 +21,6 @@ const ApiService = {
         axios.defaults.headers.common = {};
     },
 
-
-
     get(resource: string) {
         return axios.get(resource);
     },

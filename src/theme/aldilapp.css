@@ -2,13 +2,40 @@
 
 #container {
     position: absolute;
-    height: 120px;
+    height: 210px;
     width: 100%;
     left: 0px;
-    top: 0px;
-    background-color: #3b85c6;
+    top: -50px;
+    /*background-color: #3b85c6;*/
+
+    background: #12c2e9; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #12c2e9, #c471ed, #f64f59); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #12c2e9, #c471ed, #f64f59); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
   }
 
   .map-backgorund {
-    --background:  url('/assets/img/mappa.jpg') 0 0/100% 100% no-repeat;
+    --background: #eeeeee;
+  }
+
+.custom-toolbar{
+  --background: #12c2e9; /* fallback for old browsers */
+  --background: -webkit-linear-gradient(to left, #12c2e9, #c471ed, #f64f59); /* Chrome 10-25, Safari 5.1-6 */
+  --background: linear-gradient(to left, #12c2e9, #c471ed, #f64f59); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.my-custom-modal-css .modal-wrapper {
+  height: 95%;
+  bottom: 0;
+  position: absolute; 
+  display: block;  
+}
+
+.my-alert-modal .modal-wrapper {
+  height: 65%;
+  bottom: 0;
+  position: absolute; 
+  display: block;  
 }

@@ -49,8 +49,7 @@
     {{ authState.errorMsg }}
   </div>
   </ion-card-content>
-</template>
-
+</template> 
 
 <script lang="ts">
 import { IonCardContent, IonButton, IonIcon, isPlatform, alertController } from "@ionic/vue";

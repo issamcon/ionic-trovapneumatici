@@ -4,34 +4,35 @@
         "Lingua":"Lingua",
         "it":"Italiano",
         "en":"English",
-        "Logout":"Logout"
+        "Logout":"Logout",
+        "Terms": "Termini di servizio"
     },
     "Auth":{
         "Title":"Accedi",
-        "WelcomeText":"Benvenuto su Aldilapp!",
+        "WelcomeText":"Benvenuto su Trovapneumatici!",
+        "Slogan":"<ion-text><h5>Trova il sito con l'offerta migliore, cerca tra oltre 50.000 pneumatici</h5></ion-text>",
         "AccediConGoogle":"Accedi con Google",
         "AccediConApple":"Accedi con Apple",
         "AccediAnonimo":"Accedi in Anonimo",
         "Oppure":"oppure",
         "Anonimo":"Anonimo",
-        "PresentationText":"<ion-text><h6>Cerca con semplicità i tuoi defunti all'interno di un cimitero</h6></ion-text><p>Quando sei in un cimitero alla ricerca di un tuo caro, tramite un semplice ricerca nominativa puoi scoprire il punto esatto in cui è sepolto.</p><p>Tanti altri interessanti servizi verranno a breve integrati nell app.</p>",
+        "PresentationText":"<p>L'utente anonimo non può usufruire di alcuni servizi esclusivi: <ul><li>Monitoraggio del prezzo</li><li>Impostazione avviso di prezzo desiderato raggiunto.</li><li>Coupon di sconto</li></ul></p>",
         "AuthFallitaTitle":"Login fallito"
     },
     "Tabs":{
         "TitleTab1":"Cerca",
-        "TitleTab2":"I miei defunti",
-        "TitleTab4":"Informazioni"
+        "TitleTab2":"Favoriti",
+        "TitleTab4":"News",
+        "TitleTab5":"Account"
     },
     "Search":{
-        "Title":"Cerca un defunto",
-        "SubTitle":"Inserisci i dati in tuo possesso",
-        "CognomeLabel":"Cognome del defunto",
-        "NomeLabel":"Nome del defunto",
-        "DataNascitaLabel":"Data di nascita",
-        "DataMorteLabel":"Data di morte",
-        "Cimiterolabel":"Cimitero di sepoltura",
-        "SearchButton":"Cerca",
-        "AllCimiteriLabel":"- Tutti quelli gestiti da Aldilapp -",
+        "Title":"Ricerca per dimensioni",
+        "SubTitle":"Inserisci tutti le informazioni richieste",
+        "WLabel":"Larghezza",
+        "HLabel":"Altezza",
+        "DLabel":"Diametro",
+        "All":"- Tutti -",
+        "SearchButton":"CERCA E COMPARA",
         "ErrorTitle":"Errore",
         "ErrorGen": "Si è verificato un problema nel tentativo di recuperare i dati. Riprova",
         "WarnTitle":"Attenzione!",
@@ -65,14 +66,14 @@
         "WarnDefuntoExistsTitle": "Attenzione!",
         "WarnDefuntoExistsText": "Questo defunto è già nella lista dei tuoi defunti."
     },
-    "MieiDefunti":{
-        "Title": "I miei defunti",
+    "Favorites":{
+        "Title": "PRODOTTI PREFERITI",
         "AccediTitle": "Accedi",
         "AccediSubTitle": "Questa funzionalità non può essere utilizzata dagli utenti anonimi",
         "PresentationTitle":"Da questa schermata potrai:",
-        "PresentationHtmlContent":"<ul><li>Visualizzare l'elenco dei defunti che hai inserito in 'I miei defunti'</li><li>Accedere velocemente alla scheda defunto di uno dei tuoi cari</li></ul>",
-        "NessunDefuntoText1":"Non hai aggiunto ancora nessun defunto",
-        "NessunDefuntoText2":"Clicca sul tasto blu in basso, cerca un defunto e aggiungilo ai tuoi defunti."
+        "PresentationHtmlContent":"<ul><li>Visualizzare l'elenco dei prdotti che hai inserito nei 'favoriti'</li><li>Accedere velocemente alla scheda prodotto e consultare il prezzo dei tuoi prodotti preferiti</li></ul>",
+        "NoFavoritesText1":"Non hai aggiunto ancora nessun prodotto",
+        "NoFavoritesText2":"Clicca sul tasto + in basso, cerca un prodotto e aggiungilo ai tuoi favoriti."
     },
     "App":{
         "AggiornaTitle":"Aggiorna",

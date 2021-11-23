@@ -1,5 +1,5 @@
 <template>
-  <ion-img alt="logo aldilapp" :src="image" class="logo"></ion-img>
+  <ion-img alt="logo" :src="image" class="logo"></ion-img>
 </template>
 
 
@@ -11,7 +11,7 @@ export default defineComponent({
   name: 'aldLogo',
   components: { IonImg },
   setup() {
-    const image = computed(() => require('/public/assets/logo/logo_app_neg.png'))
+    const image = computed(() => require('/public/assets/logo/logo_tp_h100.png'))
 
     return {
       image,
@@ -22,7 +22,8 @@ export default defineComponent({
 
 <style scoped>
 .logo{
-  height: 50px;
-  padding: 10px;
+  height: 75px;
+  padding: 5px;
+
 }
 </style>

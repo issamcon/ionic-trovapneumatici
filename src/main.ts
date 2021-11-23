@@ -31,14 +31,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCUuebQe0uONUx8rJS6_XrqEmfuxKgb3Mo",
-  authDomain: "aldilapp-ae56b.firebaseapp.com",
-  projectId: "aldilapp-ae56b",
-  storageBucket: "aldilapp-ae56b.appspot.com",
-  messagingSenderId: "504740849427",
-  appId: "1:504740849427:web:4c5dfc1f916c44ffbadce6",
-  measurementId: "G-54C0FBC8QV"
-}
+  apiKey: "AIzaSyANEXGmVpSVGZoj-bDkqgj3jXOeYbkw80Q",
+  authDomain: "trovapneumatici-329218.firebaseapp.com",
+  projectId: "trovapneumatici-329218",
+  storageBucket: "trovapneumatici-329218.appspot.com",
+  messagingSenderId: "177549929224",
+  appId: "1:177549929224:web:6bc76a3d89ddfff2f25abd",
+  measurementId: "G-2ST8Q6LZWQ"
+};
+
 
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();

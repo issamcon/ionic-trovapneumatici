@@ -1,8 +1,8 @@
-<?xml version='1.1' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">aldilapp</string>
-    <string name="title_activity_main">aldilapp</string>
-    <string name="package_name">com.stup1.aldilapp</string>
-    <string name="custom_url_scheme">com.stup1.aldilapp</string>
-    <string name="server_client_id">504740849427-6de9157qmnnvuaun3kevpg6685qfe512.apps.googleusercontent.com</string>
+    <string name="app_name">trovapneumatici</string>
+    <string name="title_activity_main">trovapneumatici</string>
+    <string name="package_name">com.issam.trovapneumatici</string>
+    <string name="custom_url_scheme">com.issam.trovapneumatici</string>
+    <string name="server_client_id">177549929224-1d1b97u0ui822apc91md2eqmd18spl0v.apps.googleusercontent.com</string>
 </resources>

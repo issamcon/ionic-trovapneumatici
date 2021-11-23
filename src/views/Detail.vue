@@ -15,94 +15,15 @@
     </ion-header>
     <ion-loading
       :is-open="isLoading"
-      cssClass="my-custom-class"
       :message="lang.Detail.InCaricamento"
     >
     </ion-loading>
-    <ion-content class="map-backgorund" v-if="!isLoading">
-      <div id="container"></div>
+    <ion-content v-if="!isLoading">
+      
+      Dettaglio prodotto
+      <h3>{{ detail.title }}</h3>
 
-      <ion-card v-if="defunto">
-        <ion-card-header>
-          <ion-card-title color="secondary">
-            #{{ defunto.id }} {{ defunto.nome }} {{ defunto.cognome }}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <!--<ion-text color="secondary">
-            <h3></h3>
-          </ion-text>-->
-          <ion-list>
-            <ion-item>
-              <ion-label>{{ lang.Detail.NatoLabel }}</ion-label>
-              <ion-label class="ion-text-right">{{ dataNascitaStr }}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{ lang.Detail.MortoLabel }}</ion-label>
-              <ion-label class="ion-text-right">{{ dataMorteStr }}</ion-label>
-            </ion-item>
-            <!--<ion-item>
-          <ion-label>{{ lang.Detail.TipoManufatto }}</ion-label>
-          <ion-label class="ion-text-right">{{
-            defunto.tipoManufatto ?? "-"
-          }}</ion-label>
-        </ion-item>-->
-          </ion-list>
-
-          <ion-card>
-            <ion-card-header>
-              <ion-card-subtitle>{{
-                lang.Detail.PosizioneLabel
-              }}</ion-card-subtitle>
-              <ion-card-title>{{
-                defunto.posizioneAttuale.cimiteroNome
-              }}</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              <ion-list>
-                <ion-item lines="none">
-                  <ion-text
-                    ><b>{{ lang.Detail.AreaLabel }}:</b> {{ area }}</ion-text
-                  >
-                </ion-item>
-                <ion-item lines="none">
-                  <ion-text
-                    ><b>{{ lang.Detail.ZonaLabel }}:</b> {{ zona }}</ion-text
-                  >
-                </ion-item>
-                <ion-item lines="none">
-                  <ion-text
-                    ><b>{{ lang.Detail.TipoPosizioneLabel }}:</b>
-                    {{
-                      defunto.posizioneAttuale.tipoPosizione ?? "-"
-                    }}</ion-text
-                  >
-                </ion-item>
-                <ion-item lines="none">
-                  <ion-text
-                    ><b>{{ lang.Detail.GeoLabel }}:</b>
-                    {{
-                      defunto.posizioneAttuale.latitu ?? lang.Detail.NonDefinita
-                    }}</ion-text
-                  >
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-
-          <ion-button
-            type="button"
-            color="secondary"
-            expand="block"
-            size="normal"
-            :disabled="isAdding"
-            @click="onAddDefunto"
-            >{{ lang.Detail.AddButton }}
-          </ion-button>
-        </ion-card-content>
-      </ion-card>
-      <!--<div class="btnContainer"></div>-->
+     
     </ion-content>
   </ion-page>
 </template>
@@ -114,20 +35,20 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonText,
+  //IonText,
   IonMenuButton,
   IonBackButton,
   IonButtons,
   IonLoading,
-  IonLabel,
-  IonList,
-  IonItem,
-  IonCard,
-  IonCardHeader,
-  IonCardContent,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonButton,
+  //IonLabel,
+  //IonList,
+  //IonItem,
+  //IonCard,
+  //IonCardHeader,
+  //IonCardContent,
+  //IonCardSubtitle,
+  //IonCardTitle,
+  //IonButton,
   alertController,
 } from "@ionic/vue";
 import {
@@ -150,21 +71,21 @@ export default defineComponent({
     IonTitle,
     IonContent,
     IonPage,
-    IonText,
+    //IonText,
     IonMenuButton,
     IonBackButton,
     IonButtons,
     IonLoading,
     aldLogo,
-    IonLabel,
-    IonList,
-    IonItem,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonButton,
+    //IonLabel,
+    //IonList,
+    //IonItem,
+    //IonCard,
+    //IonCardHeader,
+    //IonCardContent,
+    //IonCardSubtitle,
+    //IonCardTitle,
+    //IonButton,
   },
   setup() {
     const store = useStore(key);
@@ -194,33 +115,34 @@ export default defineComponent({
       console.log("onDidDismiss resolved with role", role);
     };
 
-    const loadDefunto = async (id: number): Promise<void> => {
+    const loadDetail = async (id: number): Promise<void> => {
       await store.dispatch("selectDetail", id);
-      console.log("Caricamento dati defunto " + id);
-      setIsLoading(false);
+      console.log("Caricamento dati dettaglio " + id);  
     };
 
-    const defunto = computed(() => store.state.current);
-    const state = computed(() => store.state);
+     const detail = computed(() => store.state.current);
+     const state = computed(() => store.state);
 
+/*
     const convertDateToString = (
       date: Date | null,
       culture: string
     ): string => {
       if (date) return new Date(date).toLocaleDateString(culture);
       else return "";
-    };
+    };*/
 
     onBeforeMount(() => {
       setIsLoading(true);
-      loadDefunto(+id);
+      loadDetail(+id);
+      setIsLoading(false);
     });
 
     onBeforeUpdate((): void => {
-      if (!defunto.value || (defunto.value?.id ?? 0) != +id) {
+      if (!detail.value || (detail.value?.ItemId ?? 0) != +id) {
         setIsLoading(true);
-        loadDefunto(+id);
-        console.log("Dati defunto aggiornati");
+        loadDetail(+id);
+        setIsLoading(false);
       }
     });
 
@@ -231,7 +153,7 @@ export default defineComponent({
         !store.state.auth.user.isAnonymous
       );
     });
-    const onAddDefunto = async (): Promise<void> => {
+    const onAddToFavorites = async (): Promise<void> => {
       console.log("isAuth", isAuth.value);
       if (!isAuth.value) {
         const buttons: Array<any> = [
@@ -256,8 +178,7 @@ export default defineComponent({
           buttons
         );
       } else if (
-        state.value.mieiDefunti.filter((i) => i.id == state.value.current?.id)
-          .length > 0
+        state.value.myFavorites.filter((i) => i.ItemId == state.value.current?.ItemId).length > 0
       ) {
         const buttons: Array<any> = [
           {
@@ -275,44 +196,17 @@ export default defineComponent({
         );
       } else {
         setIsAdding(true);
-        await store.dispatch("addDefunto");
+        await store.dispatch("addToFavorites");
         setIsAdding(false);
-        console.log("Aggiunto defunto " + id);
+        console.log("Aggiunto ai preferiti " + id);
       }
     };
 
     return {
-      id,
-      defunto,
-      dataNascitaStr: computed(() =>
-        convertDateToString(store.state.current?.dataNascita ?? null, "it-IT")
-      ),
-      dataMorteStr: computed(() =>
-        convertDateToString(store.state.current?.dataMorte ?? null, "it-IT")
-      ),
-
-      area: computed(() => {
-        let ret = "";
-        if (store.state.current?.posizioneAttuale.area1 ?? null)
-          ret = store.state.current?.posizioneAttuale.area1 ?? "";
-        if (store.state.current?.posizioneAttuale.area2 ?? null)
-          ret = ret + " - " + store.state.current?.posizioneAttuale.area2 ?? "";
-        return ret;
-      }),
-      zona: computed(() => {
-        let ret = "";
-        if (store.state.current?.posizioneAttuale.zona1 ?? null)
-          ret = store.state.current?.posizioneAttuale.zona1 ?? "";
-        if (store.state.current?.posizioneAttuale.zona2 ?? null)
-          ret = ret + " - " + store.state.current?.posizioneAttuale.zona2 ?? "";
-        if (store.state.current?.posizioneAttuale.zona3 ?? null)
-          ret = ret + " - " + store.state.current?.posizioneAttuale.zona3 ?? "";
-        return ret;
-      }),
+      detail,
       isLoading,
       isAdding,
-      convertDateToString,
-      onAddDefunto,
+      onAddToFavorites,
       lang,
     };
   },

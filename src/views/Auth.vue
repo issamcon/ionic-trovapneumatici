@@ -1,42 +1,44 @@
 <template>
-  <ion-page>
+  <ion-page color="tertiary">
     <ion-header class="ion-no-border">
-      <ion-toolbar color="primary">
+      <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-menu-button></ion-menu-button>
+          <ion-menu-button @click="openFirst()"></ion-menu-button>
         </ion-buttons>
         <ion-title>
-          <ald-logo></ald-logo>
+          
         </ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" class="map-backgorund">
-      <div id="container"></div>
-      <ion-card>
+    <ion-content :fullscreen="true" >
+      
+      <!--<ion-card>
         <ion-card-header>
           <ion-card-subtitle>{{ lang.Auth.WelcomeText }}</ion-card-subtitle>
           <ion-card-title>{{ lang.Auth.Title }}</ion-card-title>
         </ion-card-header>
 
-        <!--<ald-login-base goToRoute="/tabs/tab1"></ald-login-base>-->
+        <ald-login-base goToRoute="/tabs/tab1"></ald-login-base>
+        <div class="p-3" v-html="lang.Auth.Slogan"></div>
 
         <ald-login-oauth goToRoute="/tabs/tab1" anonymousEnabled="true"></ald-login-oauth>
-
-        <!--<div class="p-3">
-          <ion-text>
-            <h6>Cerca con semplicità i tuoi defunti all'interno di un cimitero </h6>
-          </ion-text>
-          <p>
-            Quando sei in un cimitero alla ricerca di un tuo caro, tramite un semplice ricerca nominativa puoi scoprire il punto esatto in
-            cui è sepolto. 
-          </p>
-          <p>Tanti altri interessanti servizi verranno a breve integrati nell app.</p>
-        </div>-->
         <div class="p-3" v-html="lang.Auth.PresentationText">
 
         </div>
-      </ion-card>
+      </ion-card>-->
+      <div><ald-logo></ald-logo></div>
+      
+      <div class="px-3 py-3 subtitle">
+          {{ lang.Auth.WelcomeText }}
+      </div>
+      
+      <div class="px-3 py-2" v-html="lang.Auth.Slogan"></div>
+
+      <ald-login-oauth goToRoute="/tabs/tab1" anonymousEnabled="true"></ald-login-oauth>
+        
+      <div class="px-3 py-2" v-html="lang.Auth.PresentationText"></div>
+
     </ion-content>
   </ion-page>
 </template>
@@ -48,12 +50,13 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonCard,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardHeader,
+  //IonCard,
+  //IonCardSubtitle,
+  //IonCardTitle,
+  //IonCardHeader,
   IonButtons,
-  IonMenuButton
+  IonMenuButton,
+  menuController
 } from "@ionic/vue";
 
 import aldLogo from "../components/aldilapp/shared/ald-logo.vue";
@@ -71,10 +74,10 @@ export default defineComponent({
     IonTitle,
     IonContent,
     IonPage,
-    IonCard,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonCardHeader,
+    //IonCard,
+    //IonCardSubtitle,
+    //IonCardTitle,
+    //IonCardHeader,
     aldLogo,
     aldLoginOauth,
     IonButtons,
@@ -82,6 +85,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["selectLang"]),
+    openFirst() {
+      menuController.enable(true, 'first');
+      menuController.open('first');
+    },
   },
   created() {
     const store = useStore(key);
@@ -115,7 +122,7 @@ export default defineComponent({
   border-color: #f5c2c7;
   text-align: center;
 }
-#container {
+/*#container {
   position: absolute;
   height: 120px;
   width: 100%;
@@ -126,5 +133,5 @@ export default defineComponent({
 
 ion-content {
   --background: url("/assets/img/mappa.jpg") 0 0/100% 100% no-repeat;
-}
+}*/
 </style>

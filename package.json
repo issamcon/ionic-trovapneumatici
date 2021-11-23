@@ -1,8 +1,8 @@
 {
-  "name": "aldilapp",
+  "name": "trovapneumatici",
   "version": "0.0.1",
   "private": true,
-  "description": "Non",
+  "description": "App per comparare prezzi di pneumatici dai migliori siti internet",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -31,6 +31,7 @@
     "capacitor-firebase-auth": "^2.4.0",
     "core-js": "^3.6.5",
     "firebase": "^8.3.2",
+    "rss-parser": "^3.12.0",
     "scriptjs": "^2.5.9",
     "vee-validate": "^4.2.4",
     "vue": "^3.0.11",

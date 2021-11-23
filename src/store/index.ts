@@ -1,13 +1,16 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
-import axios, { AxiosRequestConfig } from 'axios'
+//import axios, { AxiosRequestConfig } from 'axios'
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { SearchFilter, ResultItem, AdditionalFilter, AlertSetting, AlertNotification, Click, FeedItem } from '@/models/index';
+import { SizeService, AlertService, ClickService } from "@/services/product.service";
+import { FeedService } from '@/services/feeds.service';
+import { db } from "../main";
 
-
-const axiosRequestConfig: AxiosRequestConfig = {
+/*const axiosRequestConfig: AxiosRequestConfig = {
     headers: { "Access-Control-Allow-Origin": "*" }
-};
+};*/
 // define your typings for the store state
 export enum AuthMode {
     SignIn,
@@ -26,62 +29,6 @@ export interface Authentication {
     routeAfterSignIn: string | null;
 }
 
-export interface SearchFilter {
-    name: string;
-    surname: string;
-    cimiteroId: number;
-    dataMorte: Date;
-    dataNascita: Date;
-}
-
-export interface DefuntoItem {
-    id: number;
-    defuntoName: string;
-    defuntoSurname: string;
-    dataNascita: Date;
-    dataMorte: Date;
-    tipoManufatto: string;
-    posizioneAttuale: Posizione;
-}
-
-export interface Posizione {
-    cimiteroId: number;
-    cimiteroNome: string;
-    cimiteroComune: string;
-    cimiteroAddress: string;
-    cimiteroProvince: string;
-    area1: string;
-    area2: string;
-    zona1: string;
-    zona2: string;
-    zona3: string;
-    latitudine: number;
-    longitudine: number;
-    tipoPosizione: string;
-}
-
-export interface ResultItem {
-    cimiteroNome: string;
-    defunti: Array<DefuntoItem>;
-}
-
-export interface State {
-    auth: Authentication | null;
-    filter: SearchFilter | null;
-    results: Array<ResultItem>;
-    searchSuccess: boolean;
-    searchResultsCount: number;
-    searchResultMessage: string;
-    current: DefuntoItem | null;
-    mieiDefunti: Array<DefuntoItem>;
-    cimiteri: Array<any>;
-    currentLang: string;
-    langs: Array<string>;
-    lang: any;
-    appSettings: AppSetting | null;
-
-}
-
 export interface Platform {
     os: string;
     appVerNumber: string;
@@ -95,8 +42,33 @@ export interface AppSetting {
     lastAndroidVerNum: string;
     iosAppId: string;
     androidAppId: string;
-    forceUpdete: boolean;
+    forceUpdate: boolean;
 }
+
+
+export interface State {
+    auth: Authentication | null;
+    appSettings: AppSetting | null;
+    currentLang: string;
+    langs: Array<string>;
+    lang: any;
+
+    filter: SearchFilter | null;
+    results: Array<ResultItem>;
+    searchSuccess: boolean;
+    searchResultsCount: number;
+    searchResultMessage: string;
+
+    current: ResultItem | null;
+    myFavorites: Array<ResultItem>;
+    mySearchs: Array<SearchFilter>;
+    myAlerts: Array<AlertSetting>;
+    myAlertNotifications: Array<AlertNotification>;
+    additionalFilter: AdditionalFilter;
+
+    feedItems: Array<FeedItem>;
+}
+
 
 
 // define injection key
@@ -115,56 +87,54 @@ export const store = createStore<State>({
             requestUpdateApp: false,
             routeAfterSignIn: null
         },
-        cimiteri: [],
+        appSettings: null,
+        currentLang: "it",
+        lang: null,
+        langs: ["it", "en"],
+
         filter: null,
-        results: [],
+        results: new Array<ResultItem>(),
         current: null,
-        mieiDefunti: [],
+        mySearchs: new Array<SearchFilter>(),
+        myFavorites: new Array<ResultItem>(),
+        myAlerts: new Array<AlertSetting>(),
+        myAlertNotifications: new Array<AlertNotification>(),
+        additionalFilter: {season:['S','W','A'], brandLevel:['P','M','E'], isChanged: false},
         searchSuccess: false,
         searchResultsCount: 0,
         searchResultMessage: "",
-        langs: ["it", "en"],
-        currentLang: "it",
-        lang: null,
-        appSettings: null
+
+        feedItems: new Array<FeedItem>()
     },
 
     getters: {
-        allCimiteri(state) {
-            return state.cimiteri;
+        getFilter(state) {
+            return state.filter;
+        },
+        getResults(state): Array<ResultItem> {
+            return state.results;
+        },
+        getAuth(state): Authentication | null {
+            return state.auth;
+        },
+        getAdditionalFilter(state): AdditionalFilter {
+            return state.additionalFilter;
+        },
+        getAlertSettings(state): Array<AlertSetting> {
+            return state.myAlerts;
         }
     },
     // ACTIONS (asynchronous)
     actions: {
-        async setAuth({ commit }, payload: any): Promise<void> {
+        async setAuth({ commit, dispatch }, payload: any): Promise<void> {
             try {
                 commit("setAuth", payload.user);
 
                 if (!payload.user.isAnonymous) {
-
-                    const postData = {
-                        Nominativo: payload.user.displayName,
-                        Email: payload.user.email,
-                        Tel: payload.user.phoneNumber,
-                        PhotoUrl: payload.user.photoURL,
-                        ProviderRegistrazione: payload.user.providerData.length > 0 ? payload.user.providerData[0]?.providerId : payload.user.providerId,
-                        FirebaseUid: payload.user.uid,
-                        Platform: payload.platform.os,
-                        AppVerNumber: payload.platform.appVerNumber,
-                        AppVerCode: payload.platform.appVerCode
-                    };
-                    console.log('Request:', postData);
-                    const response = await axios.post(
-                        "https://dev.aldilapp.it/api/appusers",
-                        postData,
-                        axiosRequestConfig
-                    );
-                    console.log('Response:', response);
-                    if (response.status == 200 || response.status == 201) {
-                        console.log('User da db:', response.data);
-                        commit("setDbUser", response.data.user);
-                        commit("setMieiDefunti", response.data.mieiDefunti);
-                    }
+                    //caricamento dei favoriti
+                    dispatch('getFavorites');
+                    dispatch('loadAlerts');
+                    dispatch('loadAlertNotifications');
                 }
             }
             catch (ex) {
@@ -175,57 +145,130 @@ export const store = createStore<State>({
         setFailAuth({ commit }, payload: string) {
             commit("setFailAuth", payload);
         },
-        setFilter({ commit }, payload: SearchFilter) {
-            if (payload.dataNascita) {
-                payload.dataNascita.setHours(0, 0, 0, 0);
-            }
-            if (payload.dataMorte) {
-                payload.dataMorte.setHours(0, 0, 0, 0);
-            }
-            commit("setFilter", payload);
-        },
+
         setResults({ commit }, payload: Array<ResultItem>) {
             commit("setResults", payload);
         },
         setCurrentItem({ commit }, payload: ResultItem) {
             commit("setCurrentItem", payload);
         },
+
         setRouteAfterSignIn({ commit }, payload: string) {
             commit("setRouteAfterSignIn", payload);
         },
+     
 
-        async fetchCimiteri({ commit }): Promise<void> {
-            const response = await axios.get("https://dev.aldilapp.it/api/cimiteri", axiosRequestConfig);
-            commit("setCimiteri", response.data);
-        },
-
-        async fetchMieiDefunti({ commit }): Promise<void> {
-            if (this.state.auth && this.state.auth.dbUserId) {
-                const dbUserId = this.state.auth.dbUserId;
-                const response = await axios.get("https://dev.aldilapp.it/api/appusers/" + dbUserId + "/defunti", axiosRequestConfig);
-                if (response.status == 200 || response.status == 201) {
-                    console.log(response.data);
-                    commit("setMieiDefunti", response.data.mieiDefunti);
+        async startAlert({commit, getters},payload: AlertSetting): Promise<boolean> {
+            try {
+                const auth = getters.getAuth;
+                if (!auth)
+                    throw Error("Not authenticated user.");
+                payload.UserId = auth.user?.uid;
+                payload.UserEmail = auth.user?.email;
+                
+                const result = await AlertService.registerAlert(payload);
+                if (result){
+                    commit('addAlertSetting', payload);
                 }
+                return result;
+            }
+            catch (ex) {
+                console.log(ex);
+                return false;
             }
         },
 
-        async searchDefunti({ commit }, payload: SearchFilter): Promise<boolean> {
+        async loadAlerts({commit, getters}): Promise<boolean> {
+            try {
+                const auth = getters.getAuth;
+                if (!auth)
+                    throw Error("Not authenticated user.");
+                const result = await AlertService.getAlertSettingsForUser(auth.user?.uid);
+                commit("setAlerts",result);
+                return true;
+            }
+            catch (ex) {
+                console.log(ex);
+                return false;
+            }
+        },
+
+        async loadAlertNotifications({commit, getters}): Promise<boolean> {
+            try {
+                const auth = getters.getAuth;
+                if (!auth)
+                    throw Error("Not authenticated user.");
+                const result = await AlertService.getAlertNotificationsForUser(auth.user?.uid);
+                commit("setAlertNotifications",result);
+                return true;
+            }
+            catch (ex) {
+                console.log(ex);
+                return false;
+            }
+        },
+
+        async stopAlert({commit, getters}, payload: number): Promise<boolean> {
+            try {
+                console.log("Requeste stop alert for ItemId: ", payload);
+                const auth = getters.getAuth;
+                if (!auth)
+                    throw Error("Not authenticated user.");
+                const myAlerts = await getters.getAlertSettings;
+                const filtered = myAlerts.filter( (i: AlertSetting) => {return i.TyreId === payload});
+                //const filtered = JSON.parse(JSON.stringify(proxy));
+                console.log(filtered);
+                if (filtered && filtered[0])
+                {
+                    const result = await AlertService.stopAlert(filtered[0].Id);
+                    if (result)
+                        commit('removeAlertSetting', payload);
+                    return result;
+                }
+                else{
+                    console.log("Itemid non presente tra gli Alerts")
+                    return false;
+                }
+            }
+            catch (ex) {
+                console.log(ex);
+                return false;
+            }
+        },
+
+        async searchProducts({ commit }, payload: any): Promise<boolean> {
             commit("setFilter", payload);
             try {
-                const response = await axios.post(
-                    "https://dev.aldilapp.it/api/defunti/filter",
-                    payload,
-                    axiosRequestConfig
-                );
-                if (response.status == 200) {
-                    commit("setResults", response.data);
+                const result = await SizeService.getTyresWithCache(payload.w, payload.h, payload.d,"","ALL", payload.pageNum, payload.pageSize);
+                commit("setResults", result);
+                return true;
+            }
+            catch (ex) {
+                console.log(ex);
+                commit("setSearchError", "Fallita APi filter " + ex);
+                return false;
+            }
+        },
+
+        async loadOtherResults({ commit, getters }): Promise<boolean> {
+            const filter = getters.getFilter;
+            filter.pageNum = filter.pageNum + 1;
+            commit("setFilter", filter);
+            
+            const additionalFilter = getters.getAdditionalFilter;
+            const season = ""+additionalFilter.season;
+            const brand = ""+additionalFilter.brandLevel;
+            
+            const results = getters.getResults;
+
+            try {
+                const pageResult = await SizeService.getTyresWithCache(filter.w, filter.h, filter.d,season, brand, filter.pageNum, filter.pageSize);
+                if (pageResult.length > 0){
+                    commit("setResults", results.concat(pageResult));
                     return true;
                 }
-                else {
-                    commit("setSearchError", "Fallita APi filter " + response.statusText);
+                else
                     return false;
-                }
             }
             catch (ex) {
                 commit("setSearchError", "Fallita APi filter " + ex);
@@ -233,68 +276,244 @@ export const store = createStore<State>({
             }
         },
 
-        async selectDetail({ commit }, payload: number): Promise<boolean> {
+
+        async selectDetail({ commit, getters }, payload: number): Promise<boolean> {
             try {
-                const response = await axios.get(
-                    "https://dev.aldilapp.it/api/defunti/" + payload, axiosRequestConfig
-                );
-                if (response.status == 200) {
-                    commit("setCurrentItem", response.data);
-                    return true;
-                }
-                else {
-                    console.log("Defunto non trovato, ID: ", payload);
-                    return false;
-                }
+
+                const results = getters.getResults;
+                const detail = results.filter((i: ResultItem) => {
+                    return i.ItemId == payload;
+                });
+
+                if (!detail || detail.length == 0)
+                    throw new Error("Item non trovato, Id: " + payload);
+
+                commit("setCurrentItem", detail[0]);
+                return true;
             }
             catch (ex) {
-                commit("setSearchError", "Fallita APi filter " + ex);
+                commit("setSearchError", "Errore nel recupero delle info: " + ex);
                 return false;
             }
         },
 
-        async addDefunto({ commit }): Promise<boolean> {
-            try {
-
-                const dbUserId = this.state.auth?.dbUserId;
-                const data = {
-                    defuntoId: this.state.current?.id
-                };
-                const response = await axios.post(
-                    "https://dev.aldilapp.it/api/appusers/" + dbUserId + "/defunti",
-                    data,
-                    axiosRequestConfig
-                );
-                if (response.status == 200 || response.status == 201) {
-                    console.log('Inserito defunto tra i miei defunti');
-                    const response2 = await axios.get("https://dev.aldilapp.it/api/appusers/" + dbUserId + "/defunti", axiosRequestConfig);
-                    if (response2.status == 200 || response2.status == 201) {
-                        commit("setMieiDefunti", response2.data.mieiDefunti);
+        async getFavorites({commit, getters}): Promise<boolean>
+        {
+            try{
+                const auth = getters.getAuth;
+                if (auth && auth.user && auth.user?.uid) {
+                    const doc = await db.collection("users").doc(auth.user?.uid).get();
+                    if (doc) {
+                        const favorites = doc.get('favorites');
+                        if (favorites && favorites.length > 0) {
+                            const items = await SizeService.getTyresByItemIds(""+favorites);
+                            commit("setFavorites", items);
+                            return true;
+                        }
                     }
-                    return true;
                 }
-                else {
-                    return false;
-                }
+                const items = new Array<ResultItem>();
+                commit("setFavorites", items);
+                return true;
             }
-            catch (ex) {
+            catch(ex)
+            {
+                const items = new Array<ResultItem>();
+                commit("setFavorites", items);
                 return false;
             }
         },
 
-        async loadAppSettings({ commit }): Promise<void> {
-            await axios.get(
-                "https://dev.aldilapp.it/api/AppSettings",
-                axiosRequestConfig
-            ).then((resp) => {
-                if (resp.status == 200 || resp.status == 201) {
-                    commit("setAppSetting", resp.data);
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
+        async addToFavorites({ commit, getters }, payload: number): Promise<boolean> {
+            console.log('addToFavorites - store.action')
+            try {
+                const auth = getters.getAuth;
+                if (auth && auth.user && auth.user?.uid) 
+                {
+                    const doc = await db.collection("users").doc(auth.user?.uid).get();
+                    let favorites = new Array<number>();
+                    if (doc) {
+                        favorites = doc.get('favorites');
+                        if (!favorites)
+                            favorites = new Array<number>();
+                        else
+                            favorites = favorites.filter((i: number) => {
+                                return i !== payload
+                            });
+                    }
+                    favorites.push(payload);
+                    
+                    //Max 10 favoriti per utente
+                    while (favorites.length > 10)
+                        favorites.shift();
+
+                    await db.collection("users").doc(auth.user?.uid).set({
+                        favorites: favorites
+                    });
+
+                    const items = await SizeService.getTyresByItemIds(""+favorites);
+                    commit("setFavorites", items);
+                    return true;
+                }   
+                return true;
+            }
+            catch (ex) {
+                console.log('Exception',ex);
+                return false;
+            }
         },
 
+        async removeFromFavorites({ commit, getters }, payload: number): Promise<boolean> {
+            try {
+                const auth = getters.getAuth;
+                if (auth && auth.user && auth.user?.uid) {
+                    const doc = await db.collection("users").doc(auth.user?.uid).get();
+                    if (doc) {
+                        let favorites = doc.get('favorites');
+                        if (favorites) {
+                            favorites = favorites.filter((i: number) => {
+                                return i !== payload
+                            });
+                            await db.collection("users").doc(auth.user?.uid).set({
+                                favorites: favorites
+                            });
+
+                            const items = await SizeService.getTyresByItemIds(""+favorites);
+                            commit("setFavorites", items);
+                            return true;
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (ex) {
+                console.log('Exception removeFromFavorites',ex);
+                return false;
+            }
+        },
+
+        toggleSeason({commit, getters}, payload: string): void {
+            try{
+            const filter = getters.getAdditionalFilter;
+            let filterSeason = filter.season;
+            if (filterSeason.indexOf(payload) !== -1)
+            {
+                filterSeason = filterSeason.filter( (i: string) => {
+                    return i !== payload;
+                });
+                
+            }
+            else {
+                filterSeason.push(payload);
+            }
+            commit("setAdditionFilterSeason", filterSeason);
+            }
+            catch(ex){
+                console.log('Error toggleSeason', ex);
+            }
+        },
+
+        toggleBrandLevel({commit, getters}, payload: string): void {
+            try{
+            const filter = getters.getAdditionalFilter;
+            let filterBrand = filter.brandLevel;
+            if (filterBrand.indexOf(payload) !== -1)
+            {
+                filterBrand = filterBrand.filter( (i: string) => {
+                    return i !== payload;
+                });
+            }
+            else {
+                filterBrand.push(payload);
+            }
+            commit("setAdditionFilterBrandLevel", filterBrand);
+            }
+            catch(ex){
+                console.log('Error toggleSeason', ex);
+            }
+        },
+        
+        async applyAdditionalFilter({commit, getters}): Promise<boolean> {
+            try {
+                //renizializzo la ricerca
+                const additionalFilter = getters.getAdditionalFilter;
+                const filter = getters.getFilter;
+                filter.pageNum = 1;
+                commit("setFilter", filter);
+                
+                const season = ""+additionalFilter.season;
+                const brand = ""+additionalFilter.brandLevel;
+                const result = await SizeService.getTyresWithCache(filter.w, filter.h, filter.d, season, brand, filter.pageNum, filter.pageSize);
+                commit("setResults", result);
+                return true;
+            }
+            catch (ex) {
+                console.log(ex);
+                commit("setSearchError", "Fallita APi filter " + ex);
+                return false;
+            }
+        },
+
+        async loadAppSettings({ commit }): Promise<boolean> {
+           
+            try{
+                const doc = await db.collection("settings").doc("appVersion").get();
+                    if (doc) {
+                        const s: AppSetting = {
+                            androidAppId: doc.get('androidAppId'),
+                            iosAppId: doc.get('iosAppId'),
+                            lastIosVerNum: doc.get('lastIosVerNum'),
+                            lastIosVerCode: doc.get('lastIosVerCode'),
+                            lastAndroidVerNum: doc.get('lastAndroidVerNum'),
+                            lastAndroidVerCode: doc.get('lastAndroidVerCode'),
+                            forceUpdate: doc.get('forceUpdete')
+                        }
+                
+                        commit("setAppSetting", s);
+                        return true;                       
+                    }
+                
+                console.log('app.setting non presenti');
+                return false;
+            }
+            catch(ex)
+            {
+                console.log('Err. recupero app.settings: ', ex);
+                return false;
+            }
+        },
+
+        async registerClick({getters}, payload: Click): Promise<boolean> {
+            try{
+                const auth = getters.getAuth;
+                if (auth && auth.user && auth.user.email)
+                    payload.UserId = auth.user.email;
+                else if (auth && auth.user)
+                    payload.UserId = auth.user.uid;
+                else
+                    payload.UserId = "unknowed";
+                return await ClickService.registerClick(payload);
+            }
+            catch(ex)
+            {
+                console.log('Err. registrazione click: ', ex);
+                return false;
+            }
+        },
+
+        async loadFeeds({commit}): Promise<boolean>{
+            try{
+                const result = await FeedService.loadFeedItems();
+                commit("setFeedItems", result);
+                return true;
+            }
+            catch(ex)
+            {
+                console.log('Err. loading feeds: ', ex);
+                return false;
+            }
+        },
+        
         selectLang({ commit }, payload: string): void {
             commit("setLang", payload);
         },
@@ -328,17 +547,24 @@ export const store = createStore<State>({
         },
         setFilter(state: any, filter: SearchFilter) {
             state.filter = filter;
+            
         },
+        
         setResults(state: any, results: Array<ResultItem>) {
             state.results = results;
             state.searchSuccess = true;
-            state.searchResultsCount = results.reduce((sum, current) => sum + current.defunti.length, 0);
+            state.searchResultsCount = results.length;
             state.searchResultMessage = "";
+            state.additionalFilter.isChanged = false;
         },
+        setFavorites(state: any, results: Array<ResultItem>) {
+            state.myFavorites = results;
+        },
+        
         setSearchError(state: any, error: string) {
             state.results = [];
             state.searchSuccess = false;
-            state.searchResultsCount = state.results.length;
+            state.searchResultsCount = 0;
             state.searchResultMessage = error;
         },
         setCurrentItem(state: any, current: ResultItem) {
@@ -381,16 +607,62 @@ export const store = createStore<State>({
             state.auth.routeAfterSignIn = payload;
         },
 
-        setAppSetting(state: any, payload: any) {
-            state.appSettings = {
-                lastIosVerCode: payload.lastVerCodeIos,
-                lastIosVerNum: payload.lastVerNumIos,
-                lastAndroidVerCode: payload.lastVerCodeAndroid,
-                lastAndroidVerNum: payload.lastVerNumAndroid,
-                iosAppId: payload.appleAppId,
-                androidAppId: payload.androidAppId,
-                forceUpdete: false,
-            }
+        setAppSetting(state: any, payload: AppSetting) {
+            state.appSettings = payload;
+        },
+
+        addToFavorites(state: any, payload: number) {
+            state.myFavorites.push(payload);
+        },
+
+        removeFromFavorites(state: any, payload: number) {
+            state.myFavorites = state.myFavorites.filter((i: number) => {
+                return i !== payload
+            });
+        },
+
+        setAdditionFilterSeason(state: any, payload: Array<string>) {
+            state.additionalFilter.season = payload;
+            state.additionalFilter.isChanged = true;
+        },
+
+        setAdditionFilterBrandLevel(state: any, payload: Array<string>) {
+            state.additionalFilter.brandLevel = payload;
+            state.additionalFilter.isChanged = true;
+        },
+
+        resetAdditionalFilter(state: any) {
+            state.additionalFilter.season = ['S','W','A'];
+            state.additionalFilter.brandLevel = ['P','M','E']
+            state.additionalFilter.isChanged = false;
+        },
+
+        setAlerts(state: any, payload: Array<AlertSetting>) {
+            if (payload && payload.length > 0)
+                state.myAlerts = payload;
+            else
+                state.myAlerts = [];
+        },
+
+        setAlertNotifications(state: any, payload: Array<AlertNotification>) {
+            if (payload && payload.length > 0)
+                state.myAlertNotifications = payload;
+            else
+                state.myAlertNotifications = [];
+        },
+
+        addAlertSetting(state: any, payload: AlertSetting){
+            state.myAlerts.push(payload);
+        },
+
+        removeAlertSetting(state: any, payload: AlertSetting){
+            state.myAlerts = state.myAlerts.filter( (i: AlertSetting) => {
+                return i.Id !== payload.Id
+            });
+        },
+
+        setFeedItems(state: any, payload: Array<FeedItem>){
+            state.feedItems = payload;
         }
     }
 });
